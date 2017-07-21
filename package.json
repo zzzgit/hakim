@@ -1,0 +1,24 @@
+{
+  "name": "jonkee.la",
+  "version": "0.0.1",
+  "description": "a validation lib",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zzzgit/hakim.git"
+  },
+  "keywords": [
+    "validaton",
+    "node",
+    "javascript"
+  ],
+  "author": "jonkee.la",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zzzgit/hakim/issues"
+  },
+  "homepage": "https://github.com/zzzgit/hakim#readme"
+}
