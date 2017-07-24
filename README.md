@@ -25,7 +25,7 @@ hakim.validate("")  // true
 hakim.validate("123.4")  // true
 hakim.validate("fatus@sky.com")  // true
 ```
-The element can be an array too, e.g:
+The element itself can be an array too, e.g:
 ```javascript
 let rules = new Hakim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
 ```
