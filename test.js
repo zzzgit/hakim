@@ -1,6 +1,20 @@
+let mocha = require('mocha')
+let expect = require('chai').expect
 let Hakim = require("./index.js")
 
-let hakim = new Hakim([[{is: "number"},{is: "integer"}],{lt:3333},true])
-console.log(hakim.validate(222.22))
+let describe = mocha.describe
+let hakim = new Hakim([[{ is: "number" }, { is: "integer" }], { lt: 3333 }, true])
+
+
+
+var assert = require('assert');
+describe('foo', function () {
+    describe('bar', function () {
+        it('should return -1 when the value is not present', function () {
+            expect(hakim.validate(222.22)).to.equal(true);
+        });
+    });
+});
+
 process.exit(0)
 

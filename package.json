@@ -1,6 +1,6 @@
 {
   "name": "hakim",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "a validation lib",
   "main": "index.js",
   "scripts": {
@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/zzzgit/hakim/issues"
   },
-  "homepage": "https://github.com/zzzgit/hakim#readme"
+  "homepage": "https://github.com/zzzgit/hakim#readme",
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2"
+  }
 }
