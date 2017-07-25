@@ -32,8 +32,16 @@ let rules = new Hakim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
 ## directives
 ### is
 ### gt
+whether it is greater than the operand
 ### lt
+whether it is lower than the operand
 ### goe
+whether it is greater than or equal to the operand
 ### loe
-### xxx
+whether it is lower than or equal to the operand
+### test
+
 ## plugin
+Third-party plugins are available by means of the plugin API. Currently only the `is` directive can be extended.
+If you want to define a plugin which extend Hakim to have a capability to judge whether the operand is a binary number, it should be like this:
+
