@@ -4,8 +4,8 @@ let Hakim = require("./index.js")
 
 let describe = mocha.describe
 let hakim = new Hakim([[{ is: "number" }, { is: "integer" }], { lt: 3333 }, true])
-
-
+hakim = new Hakim([{ includes: "latin" }])
+console.log(hakim.validate("我a我"))
 
 var assert = require('assert');
 describe('foo', function () {

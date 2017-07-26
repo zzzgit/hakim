@@ -13,9 +13,16 @@ let validators = {
 			return true
 		}
 		if (/^\-?[\d\.]+$/.test(value)) {
-			if (value.split(".").length > 2) {
+			if (value.split(".").length > 2) {	// 55.
 				return false
 			}
+			return true
+		}
+		return false
+	},
+	latin: function(value){
+		value = value + ""
+		if (/[a-zA-Z]/g.test(value)) {
 			return true
 		}
 		return false
@@ -87,6 +94,19 @@ let operators = {
 			throw new Error("no such a validator")
 		}
 		return validator.call(this, value)
+	},
+	includes: function (operand, value) {	// this function is for single char, another mothod is needed for string
+		if (!operand) {
+			throw new Error("arguement needed")
+		}
+		value = value + ""
+		for(let i=0, len=value.length; i<len; i++){
+			let char = value[i]
+			if(operators.is.call(null, operand, char)){
+				return true
+			}
+		}
+		return false
 	},
 	gt: function (operand, value) {
 		value = +value

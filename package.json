@@ -1,6 +1,6 @@
 {
   "name": "hakim",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "a validation lib",
   "main": "index.js",
   "scripts": {
