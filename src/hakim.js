@@ -158,7 +158,7 @@ let operators = {
 	decimal: function (operand, value) {
 		value = "" + value
 		let arr = value.split(".")
-		return operand == arr.length === 1 ? 0 : arr[1].length
+		return arr.length === 1 ? 0 : arr[1].length
 	},
 	required: function (operand, value) {
 		if (value == null || value == "") {

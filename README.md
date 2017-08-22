@@ -29,8 +29,25 @@ The element itself can be an array too, e.g:
 ```javascript
 let rules = new Hakim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
 ```
+## installation
+to install via npm, run:
+`npm install hakim`
+## load
+load hakim in node.js:
+```javascript
+let Hakim = require('hakim');
+// use math.js
+new Hakim([{is: "number"}, {is: "integer"}]).validate(2) // is will be true
+```
+## usage
+..
 ## directives
 ### is
+whether the string represent a special string or number
+### includes
+whether the string includes a certain type of string
+### contains
+whether the string contains a certain substring
 ### gt
 whether it is greater than the operand
 ### lt
@@ -40,8 +57,52 @@ whether it is greater than or equal to the operand
 ### loe
 whether it is lower than or equal to the operand
 ### test
+whether it can return a truthy value from the regular express
+### dplacesGt
+whether the digits of decimal part is greater than the operand 
+### dplacesLt
+whether the digits of decimal part is Lower than the operand 
+### lengthGt
+whether the length of the string is greater than the operand
+### lengthLt
+whether the length of the string is lower than the operand
+### beginWith
+whether the string begin with the operand
+### notBeginWith
+whether the string don't begin with the operand
+## types for is
+### number
+whether the string represent a number
+### integer
+whether the string represent an integer
+### positive
+whether the string represent a positive number
+### decimal
+whether the string represent a decimal number
+### latin
+whether the string consist of latin letters
+### enletters
+whether the string consist of english letters
+### email
+whether the string contains a email
+### empty
+whether the string is ""
+### money
+whether the string represent a number which has less than two decimal digits
+### qq
+whether the string represent a qq number
+### cellphone
+..
+### ip
+whether the string represent an ip address
+### url
+whether the string represent a url
+
 
 ## plugin
 Third-party plugins are available by means of the plugin API. Currently only the `is` directive can be extended.
 If you want to define a plugin which extend Hakim to have a capability to judge whether the operand is a binary number, it should be like this:
 
+
+
+alphanumeric
