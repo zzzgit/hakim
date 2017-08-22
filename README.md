@@ -1,11 +1,8 @@
 # hakim
 a javascript validation lib
-
 https://www.npmjs.com/package/hakim
-
 ## why
 It has been a long time since I need to find a javascript validation lib. Every libs I found on github is not suit for me. So finally I decided to make a new wheel.
-
 ## design
 ```javascript
 let hakim = new Hakim(rules)
@@ -80,9 +77,9 @@ whether the string represent a positive number
 ### decimal
 whether the string represent a decimal number
 ### latin
-whether the string consist of latin letters
-### enletters
-whether the string consist of english letters
+whether the string consist of latin letter
+### enLetter
+whether the string consist of english letter
 ### email
 whether the string contains a email
 ### empty
@@ -97,8 +94,12 @@ whether the string represent a qq number
 whether the string represent an ip address
 ### url
 whether the string represent a url
-
-
+## logic conjunction and disjunction
+it depends on you whether the rules passed into the construction function will behave in a logic conjunction manner or a disjunction manner. you can set it by appending an additional truthy value into the rules array. e.g:
+```javascript
+new Hakim([{is: "number"}, {is: "empty"}, true]).validate("2.3")
+```
+it will be false by default.
 ## plugin
 Third-party plugins are available by means of the plugin API. Currently only the `is` directive can be extended.
 If you want to define a plugin which extend Hakim to have a capability to judge whether the operand is a binary number, it should be like this:

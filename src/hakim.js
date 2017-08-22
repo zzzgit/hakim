@@ -83,7 +83,7 @@ let validators = {
 		value = +value
 		return !res.integer.test(value)
 	},
-	enletters: function (value) {
+	enLetter: function (value) {
 		value = value + ""
 		return (value>='a' && value<='z') || (value>='A' && value<='Z')
 	},
