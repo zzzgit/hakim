@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "clear": "rimraf built",
+    "build": "rollup -c",
     "test": "node ./test.js",
-    "push": "git add ./ && git commit -m 'test' && git pull && git push",
-    "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js",
-    "deploy": "npm run clear && npm run build && npm run push && npm publish"
+    "push": "git add ./ && git commit && git pull && git push",
+    "deploy": "npm run clear && npm run build && npm run push && npm publish",
+    "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js"
   },
   "repository": {
     "type": "git",
