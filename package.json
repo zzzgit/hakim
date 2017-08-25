@@ -1,6 +1,6 @@
 {
   "name": "hakim",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "a validation lib",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js",
     "test": "node ./test.js",
     "push": "git add ./ && git commit && git pull && git push",
-    "publish": "npm run clear && npm run build && npm run push && npm publish"
+    //"publish": "npm run clear && npm run build && npm run push && npm publish"
   },
   "repository": {
     "type": "git",
