@@ -1,1 +1,1 @@
-module.exports = require("./src/hakim.js")
+module.exports = require("./built/hakim.js")
