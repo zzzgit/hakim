@@ -6,7 +6,7 @@ module.exports = {
 	entry: ["./src/hakim.js",],
 	output: {
 		path: path.resolve(__dirname, "../built/"),
-		filename: 'bundle.js',
+		filename: 'hakim.js',
 		chunkFilename: "[id].js",
 		publicPath: "/"
 	},
