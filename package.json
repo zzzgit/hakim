@@ -6,9 +6,9 @@
   "scripts": {
     "clear": "rimraf built",
     "test": "node ./test.js",
-    "push": "git add ./ && git commit && git pull && git push",
+    "push": "git add ./ && git commit -m 'test' && git pull && git push",
     "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js",
-    "publish": "npm run clear && npm run build && npm run push && npm publish"
+    "deploy": "npm run clear && npm run build && npm run push && npm publish"
   },
   "repository": {
     "type": "git",
