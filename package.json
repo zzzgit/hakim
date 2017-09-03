@@ -1,6 +1,6 @@
 {
   "name": "hakim",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "a validation lib",
   "main": "index.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "mocha": "^3.4.2",
     "rimraf": "^2.6.1",
     "rollup": "^0.48.2",
-    "rollup-plugin-babel": "^3.0.2"
+    "rollup-plugin-babel": "^3.0.2",
+    "webpack": "^3.5.5"
   }
 }

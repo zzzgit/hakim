@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "6"
+before_script:
+  - echo bb
+after_script: 
+  - npm run test

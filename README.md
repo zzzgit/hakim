@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png)](https://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME])
+
 # hakim
 a javascript validation lib
 https://www.npmjs.com/package/hakim

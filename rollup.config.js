@@ -4,7 +4,7 @@ module.exports = {
     input: path.resolve(__dirname, "./src/hakim.js"),
     output: {
         file: path.resolve(__dirname, "./built/hakim.js"),
-        format: 'es',
+        format: 'cjs',
     },
     plugins: [
         babel({
