@@ -4,4 +4,6 @@ node_js:
 before_script:
   - echo bb
 after_script: 
+  - npm run clear
+  - npm run build
   - npm run test
