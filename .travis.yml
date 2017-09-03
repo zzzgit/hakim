@@ -3,7 +3,7 @@ node_js:
   - "6"
 before_script:
   - echo bb
-after_script: 
   - npm run clear
   - npm run build
+after_script: 
   - npm run test
