@@ -203,7 +203,7 @@ let operators = {
 		value = "" + value
 		return value.indexOf(operand) !== 0
 	},
-
+	//加添 start with with leading 之類
 
 }
 
