@@ -273,3 +273,5 @@ Hakim.prototype.validate = function (value) {
 
 export default Hakim
 //module.exports = Hakim
+
+
