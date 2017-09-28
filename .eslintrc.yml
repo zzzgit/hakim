@@ -10,11 +10,13 @@ rules:
     - error
     - tab
   linebreak-style:
-    - error
-    - unix
+    - off
   quotes:
-    - error
-    - single
+    - off
   semi:
     - error
     - never
+  no-useless-escape:
+    - warn
+  no-console:
+    - off

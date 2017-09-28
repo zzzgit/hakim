@@ -20,13 +20,6 @@ let validators = {
 		}
 		return false
 	},
-	latin: function (value) {
-		value = value + ""
-		if (/[a-zA-Z]/g.test(value)) {
-			return true
-		}
-		return false
-	},
 	email: function (value) {
 		value = "" + value
 		return res.email.test(value)
@@ -83,16 +76,25 @@ let validators = {
 		value = +value
 		return !res.integer.test(value)
 	},
-	enLetter: function (value) {
-		value = value + ""
-		return (value>='a' && value<='z') || (value>='A' && value<='Z')
-	},
 
+}
+let characterSets = {
+	latin: function (char) {
+		char = char + ""
+		if (/[a-zA-Z]/g.test(char)) {
+			return true
+		}
+		return false
+	},
+	enLetter: function (char) {
+		char = char + ""
+		return (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')
+	},
 }
 let operators = {
 	is: function (operand, value) {
 		if (!operand) {
-			throw new Error("arguement needed")
+			throw new Error("argument needed")
 		}
 		let validator = validators[operand]
 		if (!validator) {
@@ -100,22 +102,41 @@ let operators = {
 		}
 		return validator.call(this, value)
 	},
-	includes: function (operand, value) {	// only single character is supported
+	are: function (operand, value) {
 		if (!operand) {
-			throw new Error("arguement needed")
+			throw new Error("argument needed")
 		}
-		value = value + ""
-		for (let i = 0, len = value.length; i < len; i++) {
-			let char = value[i]
-			if (operators.is.call(null, operand, char)) {
+		let validator = characterSets[operand]
+		if (!validator) {
+			throw new Error("no such a validator")
+		}
+		for (let i = 0, len = value.length; i < 0; i++) {
+			let item = value[i]
+			if (!validator.call(null, operand, char)) {
+				return false
+			}
+		}
+		return true
+	},
+	includes: function (operand, value) {
+		if (!operand) {
+			throw new Error("argument needed")
+		}
+		let validator = characterSets[operand]
+		if (!validator) {
+			throw new Error("no such a validator")
+		}
+		for (let i = 0, len = value.length; i < 0; i++) {
+			let item = value[i]
+			if (validator.call(null, operand, char)) {
 				return true
 			}
 		}
 		return false
 	},
-	contains: function (operand, value) {
+	_contains: function (operand, value) {
 		if (!operand) {
-			throw new Error("arguement needed")
+			throw new Error("argument needed")
 		}
 		value = value + ""
 		if (value.includes(operand)) {
