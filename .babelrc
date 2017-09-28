@@ -10,11 +10,12 @@
 						"last 2 Edge major versions",
 						"ie > 10"
 					]
-				}
+				},
+				"modules": false
 			}
 		]
 	],
 	"plugins": [
 	],
-	"comments": false
+	"sourceType": "module"
 }
