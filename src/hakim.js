@@ -1,3 +1,8 @@
+/*global NODE_ENV*/ 
+/*eslint no-undef: "warn"*/
+/*eslint-env node*/
+
+
 let res = {
 	email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
 	qq: /^[1-9]([0-9]{4,10})$/,
@@ -81,7 +86,7 @@ let validators = {
 let characterSets = {
 	latin: function (char) {
 		char = char + ""
-		if (/[a-zA-Z]/g.test(char)) {
+		if (/[a-zA-Z]/.test(char)) {
 			return true
 		}
 		return false
@@ -110,9 +115,9 @@ let operators = {
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
-		for (let i = 0, len = value.length; i < 0; i++) {
+		for (let i = 0, len = value.length; i < len; i++) {
 			let item = value[i]
-			if (!validator.call(null, operand, char)) {
+			if (!validator.call(null, item, operand)) {
 				return false
 			}
 		}
@@ -126,9 +131,9 @@ let operators = {
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
-		for (let i = 0, len = value.length; i < 0; i++) {
+		for (let i = 0, len = value.length; i < len; i++) {
 			let item = value[i]
-			if (validator.call(null, operand, char)) {
+			if (validator.call(null, item, operand)) {
 				return true
 			}
 		}
@@ -203,8 +208,34 @@ let operators = {
 		value = "" + value
 		return value.indexOf(operand) !== 0
 	},
-	//加添 start with with leading 之類
-
+	hasLeading: function (operand, value) {
+		if (!operand) {
+			throw new Error("argument needed")
+		}
+		let validator = characterSets[operand]
+		if (!validator) {
+			throw new Error("no such a validator")
+		}
+		value = "" + value
+		if (validator.call(null, operand, value[0])) {
+			return true
+		}
+		return false
+	},
+	noLeading: function (operand, value) {
+		if (!operand) {
+			throw new Error("argument needed")
+		}
+		let validator = characterSets[operand]
+		if (!validator) {
+			throw new Error("no such a validator")
+		}
+		value = "" + value
+		if (validator.call(null, operand, value[0])) {
+			return false
+		}
+		return true
+	},
 }
 
 let core = {
@@ -265,8 +296,18 @@ Hakim.extend = function (part, name, asset) {
 	}
 }
 Hakim.prototype.validate = function (value) {
-	console.info("hakim rules:", this.criterion, "validate:", value)
-	return core.validate(this.criterion, value)
+	let result = core.validate(this.criterion, value)
+	if(NODE_ENV!=="production"){
+		const chalk = require('chalk')
+		if(!describe){
+			if(result){
+				console.log(chalk.green("hakim rules:", this.criterion, "validate:", value))
+			}else{
+				console.log(chalk.yellow("hakim rules:", this.criterion, "validate:", value))
+			}
+		}
+	}
+	return result
 }
 
 

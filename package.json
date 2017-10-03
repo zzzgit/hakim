@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clear": "rimraf built",
-    "build": "rollup -c",
-    "test": "node ./test.js",
+    "build": "cross-env NODE_ENV=develop rollup -c",
+    "test": "npm run build && node ./test.js",
+    "mocha": "mocha ./test/test.js",
     "push": "git add ./ && git commit && git pull && git push",
     "deploy": "npm run clear && npm run build && npm run push && npm publish",
     "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js"
@@ -34,12 +35,15 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "chai": "^4.1.0",
+    "chalk": "^2.1.0",
     "cross-env": "^5.0.5",
     "eslint": "^4.6.1",
     "mocha": "^3.4.2",
     "rimraf": "^2.6.1",
     "rollup": "^0.48.2",
     "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-replace": "^2.0.0",
     "webpack": "^3.5.5"
-  }
+  },
+  "dependencies": {}
 }
