@@ -31,5 +31,6 @@ expect(hakim.validate("a")).to.equal(true)
 hakim = new Hakim([{ is: "number" }, {is: "decimal"}])
 expect(hakim.validate("3.00")).to.be.true
 
-
+expect(new Hakim([{ hasLeading: "latin" }]).validate("0afda")).to.be.false
+expect(new Hakim([{ hasLeading: "digit" }]).validate("a0zzab")).to.be.true
 process.exit(0)

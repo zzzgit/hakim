@@ -73,17 +73,21 @@ let validators = {
 		value = "" + value
 		return res.integer.test(value)
 	},
+	decimal: function (value) {
+		return !res.integer.test(value)
+	},
 	positive: function (value) {
 		value = +value
 		return value > 0
 	},
-	decimal: function (value) {
-		return !res.integer.test(value)
+	negative: function (value) {
+		value = +value
+		return value < 0
 	},
 
 }
 let characterSets = {
-	latin: function (char) {
+	latin: function (char) {	// currently latin is the same to enLetter
 		char = char + ""
 		if (/[a-zA-Z]/.test(char)) {
 			return true
@@ -94,6 +98,14 @@ let characterSets = {
 		char = char + ""
 		return (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')
 	},
+	digit: function (char) {
+		char = char + ""
+		if (/[0-9]/.test(char)) {
+			return true
+		}
+		return false
+	},
+
 }
 let operators = {
 	is: function (operand, value) {
@@ -138,6 +150,42 @@ let operators = {
 		}
 		return false
 	},
+	beginWith: function (operand, value) {
+		value = "" + value
+		return value.indexOf(operand) === 0
+	},
+	notBeginWith: function (operand, value) {
+		value = "" + value
+		return value.indexOf(operand) !== 0
+	},
+	hasLeading: function (operand, value) {
+		if (!operand) {
+			throw new Error("argument needed")
+		}
+		let validator = characterSets[operand]
+		if (!validator) {
+			throw new Error("no such a validator")
+		}
+		value = "" + value
+		if (validator.call(null, value[0])) {
+			return true
+		}
+		return false
+	},
+	noLeading: function (operand, value) {
+		if (!operand) {
+			throw new Error("argument needed")
+		}
+		let validator = characterSets[operand]
+		if (!validator) {
+			throw new Error("no such a validator")
+		}
+		value = "" + value
+		if (validator.call(null, value[0])) {
+			return false
+		}
+		return true
+	},
 	_contains: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
@@ -180,10 +228,11 @@ let operators = {
 		}
 		return arr[1].length < operand
 	},
-	decimal: function (operand, value) {
+	decimal: function (operand, value) {	// not needed much
 		value = "" + value
 		let arr = value.split(".")
-		return arr.length === 1 ? 0 : arr[1].length
+		let length = arr.length === 1 ? 0 : arr[1].length
+		return length === +operand
 	},
 	required: function (operand, value) {
 		if (value == null || value == "") {
@@ -193,47 +242,11 @@ let operators = {
 	},
 	lengthGt: function (operand, value) {
 		value = "" + value
-		return value.length > operand
+		return value.length > +operand
 	},
 	lengthLt: function (operand, value) {
 		value = "" + value
-		return value.length < operand
-	},
-	beginWith: function (operand, value) {
-		value = "" + value
-		return value.indexOf(operand) === 0
-	},
-	notBeginWith: function (operand, value) {
-		value = "" + value
-		return value.indexOf(operand) !== 0
-	},
-	hasLeading: function (operand, value) {
-		if (!operand) {
-			throw new Error("argument needed")
-		}
-		let validator = characterSets[operand]
-		if (!validator) {
-			throw new Error("no such a validator")
-		}
-		value = "" + value
-		if (validator.call(null, operand, value[0])) {
-			return true
-		}
-		return false
-	},
-	noLeading: function (operand, value) {
-		if (!operand) {
-			throw new Error("argument needed")
-		}
-		let validator = characterSets[operand]
-		if (!validator) {
-			throw new Error("no such a validator")
-		}
-		value = "" + value
-		if (validator.call(null, operand, value[0])) {
-			return false
-		}
-		return true
+		return value.length < +operand
 	},
 }
 
@@ -306,7 +319,6 @@ Hakim.prototype.validate = function (value) {
 	}
 	return result
 }
-
 
 
 export default Hakim
