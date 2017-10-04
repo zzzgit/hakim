@@ -8,6 +8,9 @@ describe('is', function () {
 		it('number integer', function () {
 			expect(new Hakim([{ is: "number" }, { is: "integer" }]).validate(222)).to.be.true
 		})
+		it('number decimal', function () {
+			expect(new Hakim([{ is: "number" }, {is: "decimal"}]).validate("3.00")).to.be.true
+		})
 		it('email', function () {
 			expect(new Hakim([{ is: "email" }]).validate("kska@dkssk.com")).to.be.true
 		})
@@ -15,6 +18,9 @@ describe('is', function () {
 	describe('should be false', function () {
 		it('number integer', function () {
 			expect(new Hakim([{ is: "number" }, { is: "integer" }]).validate("a2393")).to.be.false
+		})
+		it('number decimal', function () {
+			expect(new Hakim([{ is: "number" }, {is: "decimal"}]).validate("3")).to.be.false
 		})
 		it('email', function () {
 			expect(new Hakim([{ is: "email" }]).validate("kska@")).to.be.false

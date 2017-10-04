@@ -6,8 +6,7 @@
   "scripts": {
     "clear": "rimraf built",
     "build": "cross-env NODE_ENV=develop rollup -c",
-    "test": "npm run build && node ./test.js",
-    "mocha": "mocha ./test/test.js",
+    "test": "npm run build && mocha ./test/test.js",
     "push": "git add ./ && git commit && git pull && git push",
     "deploy": "npm run clear && npm run build && npm run push && npm publish",
     "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js"

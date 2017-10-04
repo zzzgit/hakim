@@ -67,9 +67,9 @@ let validators = {
 		return res.url.test(value)
 	},
 	integer: function (value) {	// 3.00算小數
-		if (Number.isInteger(value)) {
-			return true
-		}
+		// if (Number.isInteger(value)) {
+		// 	return true
+		// }
 		value = "" + value
 		return res.integer.test(value)
 	},
@@ -78,7 +78,6 @@ let validators = {
 		return value > 0
 	},
 	decimal: function (value) {
-		value = +value
 		return !res.integer.test(value)
 	},
 
@@ -299,13 +298,11 @@ Hakim.prototype.validate = function (value) {
 	let result = core.validate(this.criterion, value)
 	if(NODE_ENV!=="production"){
 		const chalk = require('chalk')
-		if(!describe){
-			if(result){
-				console.log(chalk.green("hakim rules:", this.criterion, "validate:", value))
-			}else{
-				console.log(chalk.yellow("hakim rules:", this.criterion, "validate:", value))
-			}
-		}
+		// if(result){
+		// 	console.log(chalk.green("hakim rules:", this.criterion, "validate:", value))
+		// }else{
+		// 	console.log(chalk.yellow("hakim rules:", this.criterion, "validate:", value))
+		// }
 	}
 	return result
 }

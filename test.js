@@ -2,7 +2,8 @@
 /*eslint no-undef: "warn"*/
 /*eslint-env node*/
 
-let mocha = require('mocha')
+// this file no longer in use
+
 let expect = require('chai').expect
 //var assert = require('assert')
 
@@ -26,6 +27,9 @@ expect(hakim.validate(" ")).to.equal(true)
 
 hakim = new Hakim([{ are: "latin" }])
 expect(hakim.validate("a")).to.equal(true)
+
+hakim = new Hakim([{ is: "number" }, {is: "decimal"}])
+expect(hakim.validate("3.00")).to.be.true
 
 
 process.exit(0)
