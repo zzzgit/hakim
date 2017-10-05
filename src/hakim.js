@@ -296,15 +296,17 @@ let Hakim = function (criterion) {
 	this.criterion = criterion
 }
 Hakim.extend = function (part, name, asset) {
-	if (part == "is") {
-		if (typeof name == "string") {
-			validators[name] = asset
-			return null
+	if (typeof name == "string") {
+		if (part == "validators") {
+			return validators[name] = asset
 		}
-		let assets = name
-		for (let key in assets) {
-			validators[key] = assets[key]
+		if (part == "characterSets") {
+			return characterSets[name] = asset
 		}
+	}
+	let assets = name
+	for (let key in assets) {
+		validators[key] = assets[key]
 	}
 }
 Hakim.prototype.validate = function (value) {

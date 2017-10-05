@@ -1,7 +1,9 @@
-/*global describe it*/
+/*global describe it before after*/
 
 let Hakim = require("../index.js")
+//let Hakim = require("../src/hakim.js")
 let expect = require('chai').expect
+
 
 describe('is', function () {
 	describe('should be true', function () {
@@ -9,7 +11,7 @@ describe('is', function () {
 			expect(new Hakim([{ is: "number" }, { is: "integer" }]).validate(222)).to.be.true
 		})
 		it('number decimal', function () {
-			expect(new Hakim([{ is: "number" }, {is: "decimal"}]).validate("3.00")).to.be.true
+			expect(new Hakim([{ is: "number" }, { is: "decimal" }]).validate("3.00")).to.be.true
 		})
 		it('number positive', function () {
 			expect(new Hakim([{ is: "number" }, { is: "integer" }, { is: "positive" }]).validate("0")).to.be.false
@@ -35,7 +37,7 @@ describe('is', function () {
 			expect(new Hakim([{ is: "number" }, { is: "integer" }]).validate("a2393")).to.be.false
 		})
 		it('number decimal', function () {
-			expect(new Hakim([{ is: "number" }, {is: "decimal"}]).validate("3")).to.be.false
+			expect(new Hakim([{ is: "number" }, { is: "decimal" }]).validate("3")).to.be.false
 		})
 		it('number positive', function () {
 			expect(new Hakim([{ is: "number" }, { is: "integer" }, { is: "positive" }]).validate("-2")).to.be.false
@@ -143,90 +145,121 @@ describe('noLeading', function () {
 describe('gt', function () {
 	describe('should be true', function () {
 		it('integer', function () {
-			expect(new Hakim([{is: "number"}, { gt: "3" }]).validate("4")).to.be.true
+			expect(new Hakim([{ is: "number" }, { gt: "3" }]).validate("4")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('integer', function () {
-			expect(new Hakim([{is: "number"}, { gt: "3" }]).validate("2")).to.be.false
+			expect(new Hakim([{ is: "number" }, { gt: "3" }]).validate("2")).to.be.false
 		})
 	})
 })
 describe('goe', function () {
 	describe('should be true', function () {
 		it('integer', function () {
-			expect(new Hakim([{is: "number"}, { goe: "3" }]).validate("3")).to.be.true
+			expect(new Hakim([{ is: "number" }, { goe: "3" }]).validate("3")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('integer', function () {
-			expect(new Hakim([{is: "number"}, { goe: "3" }]).validate("2")).to.be.false
+			expect(new Hakim([{ is: "number" }, { goe: "3" }]).validate("2")).to.be.false
 		})
 	})
 })
 describe('dplacesGt', function () {
 	describe('should be true', function () {
 		it('2 digits decimal', function () {
-			expect(new Hakim([{is: "number"}, { dplacesGt: "2" }]).validate("1.234")).to.be.true
+			expect(new Hakim([{ is: "number" }, { dplacesGt: "2" }]).validate("1.234")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('2 digits decimal', function () {
-			expect(new Hakim([{is: "number"}, { dplacesGt: "2" }]).validate("2.33")).to.be.false
+			expect(new Hakim([{ is: "number" }, { dplacesGt: "2" }]).validate("2.33")).to.be.false
 		})
 	})
 })
 describe('decimal', function () {
 	describe('should be true', function () {
 		it('2 digits decimal', function () {
-			expect(new Hakim([{is: "number"}, { decimal: "2" }]).validate("1.23")).to.be.true
+			expect(new Hakim([{ is: "number" }, { decimal: "2" }]).validate("1.23")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('2 digits decimal', function () {
-			expect(new Hakim([{is: "number"}, { decimal: "2" }]).validate("2.333")).to.be.false
+			expect(new Hakim([{ is: "number" }, { decimal: "2" }]).validate("2.333")).to.be.false
 		})
 	})
 })
 describe('required', function () {
 	describe('should be true', function () {
 		it('required', function () {
-			expect(new Hakim([{required: true}]).validate(" ")).to.be.true
+			expect(new Hakim([{ required: true }]).validate(" ")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('required', function () {
-			expect(new Hakim([{required: true}]).validate("")).to.be.false
+			expect(new Hakim([{ required: true }]).validate("")).to.be.false
 		})
 	})
 })
 describe('lengthGt', function () {
 	describe('should be true', function () {
 		it('2', function () {
-			expect(new Hakim([{lengthGt: "2"}]).validate("   ")).to.be.true
+			expect(new Hakim([{ lengthGt: "2" }]).validate("   ")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('2', function () {
-			expect(new Hakim([{lengthGt: "2"}]).validate("")).to.be.false
+			expect(new Hakim([{ lengthGt: "2" }]).validate("")).to.be.false
 		})
 	})
 })
 describe('parallel', function () {
 	describe('should be true', function () {
 		it('foo', function () {
-			expect(new Hakim([[{is: "empty"}], [{is: "number"}], true]).validate(null)).to.be.true
+			expect(new Hakim([[{ is: "empty" }], [{ is: "number" }], true]).validate(null)).to.be.true
 		})
 		it('bar', function () {
-			expect(new Hakim([[{is: "empty"}], [{is: "number"}], true]).validate("2")).to.be.true
+			expect(new Hakim([[{ is: "empty" }], [{ is: "number" }], true]).validate("2")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('foo', function () {
-			expect(new Hakim([[{is: "empty"}], [{is: "number"}], true]).validate("null")).to.be.false
+			expect(new Hakim([[{ is: "empty" }], [{ is: "number" }], true]).validate("null")).to.be.false
 		})
 		it('bar', function () {
-			expect(new Hakim([[{is: "empty"}], [{is: "number"}, {is: "negative"}], true]).validate("2")).to.be.false
+			expect(new Hakim([[{ is: "empty" }], [{ is: "number" }, { is: "negative" }], true]).validate("2")).to.be.false
 		})
 	})
 })
+describe('extension', function () {
+	before("init", function(){
+		Hakim.extend("validators", "foo", function(value){
+			return "foo"===value
+		})
+		Hakim.extend("characterSets", "bar", function(char){
+			char = char + ""
+			return (char==="b" || char==="a" || char==="r")
+		})
+	})
+	after("end", function(){
+		//
+	})
+	describe('should be true', function () {
+		it('validators', function () {
+			expect(new Hakim([{ is: "foo" }]).validate("foo")).to.be.true
+		})
+		it('characterSets', function () {
+			expect(new Hakim([{ are: "bar" }]).validate("bara")).to.be.true
+		})
+	})
+	describe('should be false', function () {
+		it('validators', function () {
+			expect(new Hakim([{ is: "foo" }]).validate("fooo")).to.be.false
+		})
+		it('characterSets', function () {
+			expect(new Hakim([{ are: "bar" }]).validate("bara1")).to.be.false
+		})
+	})
+})
+
