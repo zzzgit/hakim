@@ -9,6 +9,7 @@
     "test": "npm run build && mocha --colors --reporter progress ./test/test.js",
     "push": "git add ./ && git commit && git pull && git push",
     "deploy": "npm run build && npm run push && npm publish",
+    "jest": "jest",
     "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js"
   },
   "repository": {
