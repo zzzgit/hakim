@@ -19,6 +19,9 @@ module.exports = function (config) {
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
 		reporters: ['progress'],
+		webpackMiddleware: {
+			noInfo: true
+		},
 		port: 9876,
 		colors: true,
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
