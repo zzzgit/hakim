@@ -6,6 +6,7 @@ node_js:
 before_install:
   - npm i -g npm@latest
   - npm run foo
+  - phantomjs --version
 before_script:
   - echo now before script
 after_script: 
