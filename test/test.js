@@ -1,7 +1,7 @@
 /*global describe it before after*/
 
 let Hakim = require("../index.js")
-//let Hakim = require("../src/hakim.js")
+//let Hakim = require("../src/hakim.js").default
 let expect = require('chai').expect
 
 

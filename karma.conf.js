@@ -4,9 +4,18 @@ module.exports = function (config) {
 		frameworks: ['mocha'],
 		files: ['./test/*'],
 		plugins: [
-			'karma-mocha', "karma-phantomjs-launcher", "karma-chrome-launcher"
+			"karma-chrome-launcher",
+			"karma-phantomjs-launcher", 
+			"karma-firefox-launcher", 
+			"karma-ie-launcher", 
+			//"karma-edge-launcher", 
+			'karma-mocha', 
+			'karma-webpack',
+			'karma-babel-preprocessor',
 		],
-		// test results reporter to use
+		preprocessors: {
+			'./test/*.js': ['webpack']
+		},
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
 		reporters: ['progress'],
@@ -14,13 +23,19 @@ module.exports = function (config) {
 		colors: true,
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
 		logLevel: config.LOG_INFO,
+		autoWatch: true, 
+		client: {
+			// only available when autoWatch is on
+			captureConsole: true,
+		},
 
-		// enable / disable watching file and executing tests whenever any file changes
-		autoWatch: false,
-		browsers: ['PhantomJS'],
-
-		// Continuous Integration mode
-		// if true, Karma captures browsers, runs the tests and exits
+		browsers: [
+			'Chrome',
+			//'Firefox',
+			//'IE',
+			//'PhantomJS',
+			//'Edge',
+		],
 		singleRun: false,
 		concurrency: Infinity
 	})
