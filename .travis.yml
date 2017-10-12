@@ -5,9 +5,9 @@ node_js:
   - "8"
 before_install:
   - npm i -g npm@latest
-  - npm run foo
-  - phantomjs --version
 before_script:
   - echo now before script
 after_script: 
+  - echo now karma
+  - karma start
   - echo now test finished
