@@ -33,8 +33,8 @@ module.exports = function (config) {
 		},
 
 		browsers: [
-			'Chrome',
-			//'Firefox',
+			//'Chrome',
+			'Firefox',
 			//'IE',
 			//'PhantomJS',
 			//'Edge',
