@@ -5,20 +5,27 @@ module.exports = function (config) {
 		files: ['./test/*'],
 		plugins: [
 			"karma-chrome-launcher",
-			"karma-phantomjs-launcher", 
-			"karma-firefox-launcher", 
-			"karma-ie-launcher", 
+			"karma-phantomjs-launcher",
+			"karma-firefox-launcher",
+			"karma-ie-launcher",
 			//"karma-edge-launcher", 
-			'karma-mocha', 
+			'karma-mocha',
 			'karma-webpack',
 			'karma-babel-preprocessor',
+			'karma-coverage',
 		],
 		preprocessors: {
-			'./test/*.js': ['webpack']
+			'./test/*.js': ['webpack'],
+			// './built/*.js': ['coverage'],
+			// './src/*.js': ['coverage'],
+		},
+		coverageReporter: {
+			type: 'html',
+			dir: 'coverage/'
 		},
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress'],
+		reporters: ['progress', 'coverage'],
 		webpackMiddleware: {
 			noInfo: true
 		},
@@ -26,7 +33,7 @@ module.exports = function (config) {
 		colors: true,
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
 		logLevel: config.LOG_INFO,
-		autoWatch: true, 
+		autoWatch: true,
 		client: {
 			// only available when autoWatch is on
 			captureConsole: true,

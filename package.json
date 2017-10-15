@@ -41,6 +41,7 @@
     "karma": "^1.7.1",
     "karma-babel-preprocessor": "^7.0.0",
     "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^1.1.1",
     "karma-edge-launcher": "^0.4.2",
     "karma-firefox-launcher": "^1.0.1",
     "karma-ie-launcher": "^1.0.0",
@@ -55,6 +56,5 @@
     "rollup-plugin-replace": "^2.0.0",
     "webpack": "^3.6.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
