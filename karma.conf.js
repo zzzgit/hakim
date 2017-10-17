@@ -13,19 +13,20 @@ module.exports = function (config) {
 			'karma-webpack',
 			'karma-babel-preprocessor',
 			'karma-coverage',
+			'karma-mocha-reporter'
 		],
 		preprocessors: {
 			'./test/*.js': ['webpack'],
-			// './built/*.js': ['coverage'],
-			// './src/*.js': ['coverage'],
+			'./built/*.js': ['coverage'],
+			'./src/*.js': ['coverage'],
 		},
 		coverageReporter: {
-			type: 'html',
-			dir: 'coverage/'
+			type: 'text',
+			//dir: 'coverage/'
 		},
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress', 'coverage'],
+		reporters: ['dots', 'coverage'],
 		webpackMiddleware: {
 			noInfo: true
 		},
@@ -41,8 +42,8 @@ module.exports = function (config) {
 
 		browsers: [
 			//'Chrome',
-			'Firefox',
-			//'IE',
+			//'Firefox',
+			'IE',
 			//'PhantomJS',
 			//'Edge',
 		],
