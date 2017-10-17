@@ -46,7 +46,7 @@ module.exports = function (config) {
 			//'PhantomJS',
 			//'Edge',
 		],
-		singleRun: false,
+		singleRun: true,
 		concurrency: Infinity
 	})
 }
