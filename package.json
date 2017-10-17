@@ -4,7 +4,7 @@
   "description": "a validation lib",
   "main": "index.js",
   "scripts": {
-    "clear": "rimraf built",
+    "clear": "rimraf built coverage",
     "build": "npm run clear && cross-env NODE_ENV=production rollup -c",
     "test": "npm run build && mocha --colors --reporter progress ./test/test.js",
     "karma": "npm run build && karma start",
