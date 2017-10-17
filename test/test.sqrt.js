@@ -9,7 +9,7 @@ describe("sqrt", function() {
 	})
 
 	it("参数为负值时应该报错", function() {
-		expect(function(){ My.sqrt(-1) }).to.equal(1)
+		expect( My.sqrt(-1) ).to.equal(1)
 	})
 
 })
