@@ -4,13 +4,14 @@
   "description": "a validation lib",
   "main": "index.js",
   "scripts": {
-    "clear": "rimraf built",
+    "clear": "rimraf built coverage",
     "build": "npm run clear && cross-env NODE_ENV=production rollup -c",
     "test": "npm run build && mocha --colors --reporter progress ./test/test.js",
     "karma": "npm run build && karma start",
     "push": "git add ./ && git commit && git pull && git push",
     "deploy": "npm run build && npm run push && npm publish",
     "a": "nyc ./a.js",
+    "cover": "istanbul cover _mocha test/test.sqrt.js",
     "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js"
   },
   "repository": {

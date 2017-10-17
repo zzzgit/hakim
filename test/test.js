@@ -263,3 +263,4 @@ describe('extension', function () {
 	})
 })
 
+// chai驗證是否有正確地拋異常
