@@ -16,7 +16,7 @@ module.exports = function (config) {
 			'karma-mocha-reporter'
 		],
 		preprocessors: {
-			'./test/*.js': ['webpack'],
+			'./test/*.js': ['webpack','coverage'],
 			'./built/*.js': ['coverage'],
 			'./src/*.js': ['coverage'],
 		},
@@ -42,8 +42,8 @@ module.exports = function (config) {
 
 		browsers: [
 			//'Chrome',
-			//'Firefox',
-			'IE',
+			'Firefox',
+			//'IE',
 			//'PhantomJS',
 			//'Edge',
 		],
