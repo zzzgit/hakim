@@ -254,8 +254,7 @@ let core = {
 	validateItem: function (obj, value) {
 		for (let key in obj) {
 			if (!operators[key]) {
-				console.warn(`no such directive:${key}`)
-				continue
+				throw new Error(`no such directive:${key}`)
 			}
 			if (!operators[key].call(this, obj[key], value)) {	// 一个不过，就都不过
 				return false
@@ -327,3 +326,4 @@ export default Hakim
 //module.exports = Hakim
 
 
+// uninstall function is needed

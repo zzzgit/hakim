@@ -262,5 +262,18 @@ describe('extension', function () {
 		})
 	})
 })
-
-// chai驗證是否有正確地拋異常
+describe('exception', function () {
+	describe('should be thrown', function () {
+		it('now such directive', function () {
+			expect(_=>new Hakim([{ nosuchdirective: "foo" }]).validate("foo")).to.throw("no such")
+		})
+		it('now such character set', function () {
+			expect(_=>new Hakim([{ are: "barr" }]).validate("bara")).to.throw("no such")
+		})
+		it('now such xx', function () {
+			expect(_=>new Hakim([{ is: "bar" }]).validate("bara")).to.throw("no such")
+		})
+	})
+	describe('should not be throun', function () {
+	})
+})
