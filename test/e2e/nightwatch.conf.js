@@ -7,7 +7,7 @@ module.exports = {
 	"globals_path": "",
 	"selenium": {
 		"start_process": true,
-		"server_path": "./bin/selenium-server-standalone.jar",
+		"server_path": "./bin/selenium-server-standalone.jar",	//文件太大，不應該放在項目中
 		////"server_path": require('selenium-server').path,
 		"log_path": "",
 		"host": "127.0.0.1",
