@@ -8,6 +8,7 @@
     "build": "npm run clear && cross-env NODE_ENV=production rollup -c",
     "test": "npm run build && nyc mocha --colors --reporter dot ./test/test.js",
     "karma": "npm run build && karma start",
+    "e2e": "nightwatch --config test/e2e/nightwatch.conf.js --env chrome",
     "push": "git add ./ && git commit && git pull && git push",
     "deploy": "npm run build && npm run push && npm publish",
     "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --profile --progress --config ./build/webpack.config.js"
@@ -51,12 +52,15 @@
     "karma-requirejs": "^1.1.0",
     "karma-webpack": "^2.0.5",
     "mocha": "^3.4.2",
+    "nightwatch": "^0.9.16",
     "nyc": "^11.2.1",
     "rimraf": "^2.6.1",
     "rollup": "^0.48.2",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-replace": "^2.0.0",
+    "chromedriver": "^2.33.1",
     "webpack": "^3.6.0"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }

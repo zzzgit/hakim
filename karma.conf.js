@@ -13,7 +13,8 @@ module.exports = function (config) {
 			'karma-webpack',
 			'karma-babel-preprocessor',
 			'karma-coverage',
-			'karma-mocha-reporter'
+			'karma-mocha-reporter',
+			
 		],
 		preprocessors: {
 			'./test/*.js': ['webpack','coverage'],

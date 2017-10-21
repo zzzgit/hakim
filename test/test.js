@@ -1,4 +1,4 @@
-/*global describe it before after*/
+/*global*/
 
 let Hakim = require("../index.js")
 //let Hakim = require("../src/hakim.js").default
