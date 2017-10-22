@@ -7,3 +7,4 @@ built/
 coverage/
 .nyc_output/
 /reports
+selenium-debug.log
