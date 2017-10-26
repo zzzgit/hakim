@@ -1,4 +1,4 @@
-/*global NODE_ENV*/ 
+/*global NODE_ENV*/
 /*eslint no-undef: "warn"*/
 /*eslint-env node*/
 
@@ -10,9 +10,9 @@ let res = {
 	ip: /(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)/,
 	url: /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/,
 	integer: /^\-?\d{1,15}$/,
-	money: /^([1-9]\d*(\.\d+)?|0)$/
+	money: /^([1-9]\d*(\.\d+)?|0)$/	//@del:0.3
 }
-let validators = {
+let entities = {
 	number: function (value) {
 		if (typeof value === "number") {
 			return true
@@ -86,7 +86,7 @@ let validators = {
 	},
 
 }
-let characterSets = {
+let elements = {
 	latin: function (char) {	// currently latin is the same to enLetter
 		char = char + ""
 		if (/[a-zA-Z]/.test(char)) {
@@ -112,17 +112,20 @@ let operators = {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
-		let validator = validators[operand]
+		let validator = entities[operand]
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
 		return validator.call(this, value)
 	},
+	isNot: function (operand, value) {
+		return !operators.is(operand, value)
+	},
 	are: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
-		let validator = characterSets[operand]
+		let validator = elements[operand]
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
@@ -134,11 +137,17 @@ let operators = {
 		}
 		return true
 	},
+	match: function (operand, value) {
+		if (!(operand instanceof RegExp)) {
+			throw new Error("the first parameter must be a regular express")
+		}
+		return operand.test(value + "")
+	},
 	includes: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
-		let validator = characterSets[operand]
+		let validator = elements[operand]
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
@@ -149,6 +158,9 @@ let operators = {
 			}
 		}
 		return false
+	},
+	exist: function (operand, value) {
+		return operators.includes(operand, value)
 	},
 	beginWith: function (operand, value) {
 		value = "" + value
@@ -162,7 +174,7 @@ let operators = {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
-		let validator = characterSets[operand]
+		let validator = elements[operand]
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
@@ -176,7 +188,7 @@ let operators = {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
-		let validator = characterSets[operand]
+		let validator = elements[operand]
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
@@ -186,15 +198,12 @@ let operators = {
 		}
 		return true
 	},
-	_contains: function (operand, value) {
+	haveString: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
 		value = value + ""
-		if (value.includes(operand)) {
-			return true
-		}
-		return false
+		return value.includes(operand)
 	},
 	gt: function (operand, value) {
 		value = +value
@@ -228,7 +237,13 @@ let operators = {
 		}
 		return arr[1].length < operand
 	},
-	decimal: function (operand, value) {	// not needed much
+	decimal: function (operand, value) {	//@del:0.3.0
+		value = "" + value
+		let arr = value.split(".")
+		let length = arr.length === 1 ? 0 : arr[1].length
+		return length === +operand
+	},
+	dlengthOf: function (operand, value) {
 		value = "" + value
 		let arr = value.split(".")
 		let length = arr.length === 1 ? 0 : arr[1].length
@@ -240,6 +255,10 @@ let operators = {
 		}
 		return true
 	},
+	lengthOf: function (operand, value) {
+		value = "" + value
+		return value.length === +operand
+	},
 	lengthGt: function (operand, value) {
 		value = "" + value
 		return value.length > +operand
@@ -248,6 +267,11 @@ let operators = {
 		value = "" + value
 		return value.length < +operand
 	},
+	equal: function (operand, value) {
+		return value == operand
+	},
+
+
 }
 
 let core = {
@@ -296,21 +320,27 @@ let Hakim = function (criterion) {
 }
 Hakim.extend = function (part, name, asset) {
 	if (typeof name == "string") {
-		if (part == "validators") {
-			return validators[name] = asset
+		if (part == "validators") {	//@del:0.3.0
+			part = "entities"
 		}
-		if (part == "characterSets") {
-			return characterSets[name] = asset
+		if (part == "characterSets") {	//@del:0.3.0
+			part = "elements"
+		}
+		if (part == "entities") {
+			return entities[name] = asset
+		}
+		if (part == "elements") {
+			return elements[name] = asset
 		}
 	}
 	let assets = name
 	for (let key in assets) {
-		validators[key] = assets[key]
+		entities[key] = assets[key]
 	}
 }
 Hakim.prototype.validate = function (value) {
 	let result = core.validate(this.criterion, value)
-	if(NODE_ENV!=="production"){
+	if (NODE_ENV !== "production") {
 		const chalk = require('chalk')
 		// if(result){
 		// 	console.log(chalk.green("hakim rules:", this.criterion, "validate:", value))
@@ -326,4 +356,4 @@ export default Hakim
 //module.exports = Hakim
 
 
-// uninstall function is needed
+//@todo uninstall functionality is needed

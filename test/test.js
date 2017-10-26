@@ -56,6 +56,57 @@ describe('is', function () {
 		})
 	})
 })
+describe('isNot', function () {
+	describe('should be true', function () {
+		it('number but not integer', function () {
+			expect(new Hakim([{ is: "number" }, { isNot: "integer" }]).validate(222.22)).to.be.true
+		})
+		it('number but not decimal', function () {
+			expect(new Hakim([{ is: "number" }, { isNot: "decimal" }]).validate("3333")).to.be.true
+		})
+		it('number but not positive', function () {
+			expect(new Hakim([{ is: "number" }, { is: "integer" }, { isNot: "positive" }]).validate("0")).to.be.true
+		})
+		it('email', function () {
+			expect(new Hakim([{ isNot: "email" }]).validate("@dkssk.com")).to.be.true
+		})
+		it('empty', function () {
+			expect(new Hakim([{ isNot: "empty" }]).validate("null")).to.be.true
+		})
+		it('money', function () {
+			expect(new Hakim([{ isNot: "money" }]).validate("a3.223")).to.be.true
+		})
+		it('ip', function () {
+			expect(new Hakim([{ isNot: "ip" }]).validate("299.0.0")).to.be.true
+		})
+		it('url', function () {
+			expect(new Hakim([{ isNot: "url" }]).validate("D:\Program Files")).to.be.true
+		})
+	})
+	describe('should be false', function () {
+		it('number but not integer', function () {
+			expect(new Hakim([{ is: "number" }, { isNot: "integer" }]).validate("2222")).to.be.false
+		})
+		it('number but not decimal', function () {
+			expect(new Hakim([{ is: "number" }, { isNot: "decimal" }]).validate("3.00")).to.be.false
+		})
+		it('number but not positive', function () {
+			expect(new Hakim([{ is: "number" }, { is: "integer" }, { isNot: "positive" }]).validate("2")).to.be.false
+		})
+		it('email', function () {
+			expect(new Hakim([{ isNot: "email" }]).validate("kska@g.com")).to.be.false
+		})
+		it('empty', function () {
+			expect(new Hakim([{ isNot: "empty" }]).validate("")).to.be.false
+		})
+		it('money', function () {
+			expect(new Hakim([{ isNot: "money" }]).validate("2.22")).to.be.false
+		})
+		it('url', function () {
+			expect(new Hakim([{ isNot: "url" }]).validate("http://www.baidu.com")).to.be.false
+		})
+	})
+})
 describe('are', function () {
 	describe('should be true', function () {
 		it('latin', function () {
@@ -76,6 +127,22 @@ describe('are', function () {
 
 	})
 })
+describe('equal', function () {
+	describe('should be true', function () {
+		it('value', function () {
+			expect(new Hakim([{ equal: "latin" }]).validate("latin")).to.be.true
+		})
+		it('reference', function () {
+			expect(new Hakim([{ equal: "3" }]).validate(3)).to.be.true
+		})
+
+	})
+	describe('should be false', function () {
+		it('value', function () {
+			expect(new Hakim([{ equal: "latin2" }]).validate("latin")).to.be.false
+		})
+	})
+})
 describe('includes', function () {
 	describe('should be true', function () {
 		it('latin', function () {
@@ -91,6 +158,36 @@ describe('includes', function () {
 		})
 		it('digit', function () {
 			expect(new Hakim([{ includes: "digit" }]).validate("jksja我們")).to.be.false
+		})
+	})
+})
+describe('exist', function () {
+	describe('should be true', function () {
+		it('latin', function () {
+			expect(new Hakim([{ exist: "latin" }]).validate("zzabc00")).to.be.true
+		})
+		it('digit', function () {
+			expect(new Hakim([{ exist: "digit" }]).validate("zzabc00")).to.be.true
+		})
+	})
+	describe('should be false', function () {
+		it('latin', function () {
+			expect(new Hakim([{ exist: "latin" }]).validate("43883")).to.be.false
+		})
+		it('digit', function () {
+			expect(new Hakim([{ exist: "digit" }]).validate("jksja我們")).to.be.false
+		})
+	})
+})
+describe('haveString', function () {
+	describe('should be true', function () {
+		it('aaa', function () {
+			expect(new Hakim([{ haveString: "aaa" }]).validate("baaab")).to.be.true
+		})
+	})
+	describe('should be false', function () {
+		it('aaa', function () {
+			expect(new Hakim([{ haveString: "aaa" }]).validate("43883")).to.be.false
 		})
 	})
 })
@@ -202,6 +299,30 @@ describe('required', function () {
 		})
 	})
 })
+describe('lengthOf', function () {
+	describe('should be true', function () {
+		it('2', function () {
+			expect(new Hakim([{ lengthOf: "2" }]).validate("  ")).to.be.true
+		})
+	})
+	describe('should be false', function () {
+		it('2', function () {
+			expect(new Hakim([{ lengthOf: "2" }]).validate("")).to.be.false
+		})
+	})
+})
+describe('dlengthOf', function () {
+	describe('should be true', function () {
+		it('2.34', function () {
+			expect(new Hakim([{is: "number"}, { dlengthOf: 2 }]).validate("2.34")).to.be.true
+		})
+	})
+	describe('should be false', function () {
+		it('2.34', function () {
+			expect(new Hakim([{is: "number"}, { dlengthOf: 2 }]).validate(".2")).to.be.false
+		})
+	})
+})
 describe('lengthGt', function () {
 	describe('should be true', function () {
 		it('2', function () {
@@ -211,6 +332,18 @@ describe('lengthGt', function () {
 	describe('should be false', function () {
 		it('2', function () {
 			expect(new Hakim([{ lengthGt: "2" }]).validate("")).to.be.false
+		})
+	})
+})
+describe('match', function () {
+	describe('should be true', function () {
+		it('/\d{3}/', function () {
+			expect(new Hakim([{ match: /\d{3}/ }]).validate("222")).to.be.true
+		})
+	})
+	describe('should be false', function () {
+		it('/\d{3}/', function () {
+			expect(new Hakim([{ match: /\d{3}/ }]).validate("")).to.be.false
 		})
 	})
 })
@@ -233,16 +366,16 @@ describe('parallel', function () {
 	})
 })
 describe('extension', function () {
-	before("init", function(){
-		Hakim.extend("validators", "foo", function(value){
-			return "foo"===value
+	before("init", function () {
+		Hakim.extend("validators", "foo", function (value) {
+			return "foo" === value
 		})
-		Hakim.extend("characterSets", "bar", function(char){
+		Hakim.extend("characterSets", "bar", function (char) {
 			char = char + ""
-			return (char==="b" || char==="a" || char==="r")
+			return (char === "b" || char === "a" || char === "r")
 		})
 	})
-	after("end", function(){
+	after("end", function () {
 		//
 	})
 	describe('should be true', function () {
@@ -265,13 +398,13 @@ describe('extension', function () {
 describe('exception', function () {
 	describe('should be thrown', function () {
 		it('now such directive', function () {
-			expect(_=>new Hakim([{ nosuchdirective: "foo" }]).validate("foo")).to.throw("no such")
+			expect(_ => new Hakim([{ nosuchdirective: "foo" }]).validate("foo")).to.throw("no such")
 		})
 		it('now such character set', function () {
-			expect(_=>new Hakim([{ are: "barr" }]).validate("bara")).to.throw("no such")
+			expect(_ => new Hakim([{ are: "barr" }]).validate("bara")).to.throw("no such")
 		})
 		it('now such xx', function () {
-			expect(_=>new Hakim([{ is: "bar" }]).validate("bara")).to.throw("no such")
+			expect(_ => new Hakim([{ is: "bar" }]).validate("bara")).to.throw("no such")
 		})
 	})
 	describe('should not be throun', function () {
