@@ -4,7 +4,17 @@
 a javascript validation lib
 https://www.npmjs.com/package/hakim
 ## why
-It has been a long time since I need to find a javascript validation lib. Every libs I found on github is not suit for me. So finally I decided to make a new wheel.
+It has been a long time since I need to find an easy to use javascript validation lib. Every libs I found on github is not suit for me. So finally I decided to make a new wheel.
+## installation
+To install via npm, run:
+```javascript
+npm install hakim
+```
+## load
+To load hakim in node.js:
+```javascript
+const Hakim = require('hakim');
+```
 ## design
 ```javascript
 let hakim = new Hakim(rules)
@@ -32,14 +42,6 @@ hakim.validate("fatus@sky.com")  // true
 The element itself can be an array too, e.g:
 ```javascript
 let rules = new Hakim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
-```
-## installation
-To install via npm, run:
-`npm install hakim`
-## load
-To load hakim in node.js:
-```javascript
-const Hakim = require('hakim');
 ```
 ## usage
 Rules are organized in an array, and every rule contains a validator and an operand. Operands can be an `element` or an `entity` or any kinds of data.
