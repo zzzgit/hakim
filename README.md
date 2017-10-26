@@ -34,16 +34,19 @@ The element itself can be an array too, e.g:
 let rules = new Hakim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
 ```
 ## installation
-to install via npm, run:
+To install via npm, run:
 `npm install hakim`
 ## load
-load hakim in node.js:
+To load hakim in node.js:
+```javascript
+const Hakim = require('hakim');
+```
+## usage
+Rules are organized in an array, and every rule contains a validator and an operand. Operands can be an `element` or an `entity` or any kinds of data.
 ```javascript
 const Hakim = require('hakim');
 new Hakim([{is: "number"}, {is: "integer"}]).validate(2) // true
 ```
-## usage
-..
 ## validators
 ### is
 whether the string represent a special string or number(more details on entities chapter)
@@ -93,6 +96,12 @@ where the first member of the string is belong to a certain kind of characters(m
 where the first member of the string is `not` belong to a certain kind of characters(more details on elements chapter)
 
 ## entities
+Each entity represents a certain kind of strings, like a `number` or an `email`. `is` and `isNot` can be used to judge whether the string represents a certain entity. 
+```javascript
+let hakim = new Hakim([{is: "number"}])
+hakim.validate("2")  // true
+```
+If there is no such a entity match you need, you can extend this lib by yourself, check plugin chapter for details.
 ### number
 whether the string represent a number
 ### integer
@@ -112,6 +121,7 @@ whether the string represent an ip address
 ### url
 whether the string represent a url
 ## elements
+Each element represents a certain character set, like Latin letters or digits. `are` can be used to judge whether all of members of a string are all belong to a certain set.
 ### latin
 whether the character belongs to latin letter set
 ### enLetter
@@ -119,11 +129,12 @@ currently the same to latin
 ### digit
 whether the character belongs to 0-9
 ## logic conjunction and disjunction
-it depends on you whether the rules passed into the construction function will behave in a logic conjunction manner or a disjunction manner. you can set it by appending an additional truthy value into the rules array. e.g:
+By default the rules in a array will be treated in an `and`-like manner, but it depends on you whether to change it. You can set it by appending an additional truthy value into the rules array. e.g:
 ```javascript
-new Hakim([{is: "number"}, {is: "empty"}, true]).validate("2.3")
+new Hakim([{is: "number"}, {is: "empty"}, true]).validate("2.3") //true
+new Hakim([{is: "number"}, {is: "empty"}, true]).validate("") //true
 ```
-it will be false by default.
+You can specify a disjunction manner in every array, includes nested arrays, or leave it in a conjunction manner by default.
 ## plugin
 Third-party plugins are available by means of the extension API. Currently only `entities` and `elements` can be extended.
 For instance, if you want to define a plugin which extend Hakim to have a capability to judge whether the operand is a binary number, it should be like this:
