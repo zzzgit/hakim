@@ -5,8 +5,6 @@
 
 let res = {
 	email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-	qq: /^[1-9]([0-9]{4,10})$/,
-	cellphone: /^0?(13|14|15|18)[0-9]{9}$/,
 	ip: /(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)/,
 	url: /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/,
 	integer: /^\-?\d{1,15}$/,
@@ -46,17 +44,9 @@ let entities = {
 		}
 		return false
 	},
-	money: function (value) {
+	money: function (value) {	// useless
 		value = "" + value
 		return res.money.test(value)
-	},
-	qq: function (value) {
-		value = "" + value
-		return res.qq.test(value)
-	},
-	cellphone: function (value) {
-		value = "" + value
-		return res.cellphone.test(value)
 	},
 	ip: function (value) {
 		value = "" + value
@@ -107,7 +97,7 @@ let elements = {
 	},
 
 }
-let operators = {
+let validators = {
 	is: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
@@ -119,7 +109,7 @@ let operators = {
 		return validator.call(this, value)
 	},
 	isNot: function (operand, value) {
-		return !operators.is(operand, value)
+		return !validators.is(operand, value)
 	},
 	are: function (operand, value) {
 		if (!operand) {
@@ -143,7 +133,7 @@ let operators = {
 		}
 		return operand.test(value + "")
 	},
-	includes: function (operand, value) {
+	includes: function (operand, value) {	//@del:0.5.0
 		if (!operand) {
 			throw new Error("argument needed")
 		}
@@ -160,7 +150,7 @@ let operators = {
 		return false
 	},
 	exist: function (operand, value) {
-		return operators.includes(operand, value)
+		return validators.includes(operand, value)
 	},
 	beginWith: function (operand, value) {
 		value = "" + value
@@ -199,6 +189,13 @@ let operators = {
 		return true
 	},
 	haveString: function (operand, value) {
+		if (!operand) {
+			throw new Error("argument needed")
+		}
+		value = value + ""
+		return value.includes(operand)
+	},
+	hasString: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
@@ -277,10 +274,10 @@ let operators = {
 let core = {
 	validateItem: function (obj, value) {
 		for (let key in obj) {
-			if (!operators[key]) {
+			if (!validators[key]) {
 				throw new Error(`no such directive:${key}`)
 			}
-			if (!operators[key].call(this, obj[key], value)) {	// 一个不过，就都不过
+			if (!validators[key].call(this, obj[key], value)) {	// 一个不过，就都不过
 				return false
 			}
 		}
@@ -335,7 +332,7 @@ Hakim.extend = function (part, name, asset) {
 	}
 	let assets = name
 	for (let key in assets) {
-		entities[key] = assets[key]
+		entities[key] = assets[key]	// a bug here
 	}
 }
 Hakim.prototype.validate = function (value) {
