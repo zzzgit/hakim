@@ -10,6 +10,7 @@ To install via npm, run:
 ```javascript
 npm install hakim
 ```
+2
 ## load
 To load hakim in node.js:
 ```javascript
