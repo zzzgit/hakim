@@ -5,7 +5,7 @@ a javascript validation lib
 https://www.npmjs.com/package/hakim
 ## why
 It has been a long time since I need to find an easy to use javascript validation lib. Every libs I found on github is not suit for me. So finally I decided to make a new wheel.
-1
+11
 ## installation
 To install via npm, run:
 ```javascript
