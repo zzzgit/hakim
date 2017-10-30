@@ -6,7 +6,7 @@
   "scripts": {
     "clear": "rimraf built coverage .nyc_output",
     "build": "npm run clear && cross-env NODE_ENV=production rollup -c",
-    "test": "npm run build && nyc mocha --colors --reporter dot ./test/test.js",
+    "test": "npm run build && nyc mocha --colors --reporter dot ./test/unit/test.js",
     "karma": "npm run build && karma start",
     "e2e": "nightwatch --config test/e2e/nightwatch.conf.js --env chrome",
     "push": "git add ./ && git commit && git pull && git push",

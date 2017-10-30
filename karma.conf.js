@@ -2,7 +2,7 @@ module.exports = function (config) {
 	config.set({
 		basePath: '',
 		frameworks: ['mocha'],
-		files: ['./test/*'],
+		files: ['./test/unit/*'],
 		plugins: [
 			"karma-chrome-launcher",
 			"karma-phantomjs-launcher",
@@ -17,7 +17,7 @@ module.exports = function (config) {
 			
 		],
 		preprocessors: {
-			'./test/*.js': ['webpack','coverage'],
+			'./test/unit/*.js': ['webpack','coverage'],
 			'./built/*.js': ['coverage'],
 			'./src/*.js': ['coverage'],
 		},

@@ -1,6 +1,6 @@
 /*global*/
 
-let Hakim = require("../index.js")
+let Hakim = require("../../index.js")
 //let Hakim = require("../src/hakim.js").default
 let expect = require('chai').expect
 

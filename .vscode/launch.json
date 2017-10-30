@@ -15,7 +15,7 @@
                 "--timeout",
                 "999999",
                 "--colors",
-                "./test/*"
+                "./test/unit/*"
             ],
             "runtimeArgs": [
                 "--nolazy"
