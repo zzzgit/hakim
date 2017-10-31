@@ -139,7 +139,7 @@ new Hakim([{is: "number"}, {is: "empty"}, true]).validate("") //true
 You can specify a disjunction manner in every array, includes nested arrays, or leave it in a conjunction manner by default.
 ## plugin
 Third-party plugins are available by means of the extension API. Currently only `entities` and `elements` can be extended.
-For instance, if you want to define a plugin which extend Hakim to have a capability to judge whether the operand is a binary number, it should be like this:
+For instance, if you want to define a plugin which extends Hakim to have a capability to judge whether the operand is a binary number, it should be like this:
 ```javascript
 Hakim.extend("entities", {
   binary: funciton(value){
