@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/zzzgit/hakim.png)](https://travis-ci.org/zzzgit/hakim)
-
+[![Join the chat at https://gitter.im/hakim-lib/Lobby](https://badges.gitter.im/hakim-lib/Lobby.svg)](https://gitter.im/hakim-lib/Lobby)
 # hakim
 a javascript validation lib
 https://www.npmjs.com/package/hakim
