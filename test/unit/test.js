@@ -408,5 +408,8 @@ describe('exception', function () {
 		})
 	})
 	describe('should not be throun', function () {
+		it('exist', function () {
+			expect(new Hakim([{ exist: "latin" }]).validate(null)).to.be.false
+		})
 	})
 })
