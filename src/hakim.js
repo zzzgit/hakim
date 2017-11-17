@@ -141,6 +141,9 @@ let validators = {
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
+		if(value==null || value==""){
+			return false
+		}
 		for (let i = 0, len = value.length; i < len; i++) {
 			let item = value[i]
 			if (validator.call(null, item, operand)) {

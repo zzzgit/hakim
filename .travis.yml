@@ -1,5 +1,5 @@
 branches:
-  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+  - /.*/
 language: node_js
 node_js:
   - "6"
