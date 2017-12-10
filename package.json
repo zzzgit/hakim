@@ -61,6 +61,5 @@
     "chromedriver": "^2.33.1",
     "webpack": "^3.6.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
