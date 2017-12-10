@@ -314,12 +314,12 @@ describe('lengthOf', function () {
 describe('dlengthOf', function () {
 	describe('should be true', function () {
 		it('2.34', function () {
-			expect(new Hakim([{is: "number"}, { dlengthOf: 2 }]).validate("2.34")).to.be.true
+			expect(new Hakim([{ is: "number" }, { dlengthOf: 2 }]).validate("2.34")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('2.34', function () {
-			expect(new Hakim([{is: "number"}, { dlengthOf: 2 }]).validate(".2")).to.be.false
+			expect(new Hakim([{ is: "number" }, { dlengthOf: 2 }]).validate(".2")).to.be.false
 		})
 	})
 })
@@ -396,7 +396,7 @@ describe('extension', function () {
 	})
 })
 describe('exception', function () {
-	describe('should be thrown', function () {
+	describe('should be throw an error', function () {
 		it('now such directive', function () {
 			expect(_ => new Hakim([{ nosuchdirective: "foo" }]).validate("foo")).to.throw("no such")
 		})
@@ -406,10 +406,50 @@ describe('exception', function () {
 		it('now such xx', function () {
 			expect(_ => new Hakim([{ is: "bar" }]).validate("bara")).to.throw("no such")
 		})
+		it('compare number with null', function () {
+			expect(_ => new Hakim([{ loe: "3" }]).validate(null)).to.throw("can't campare number with null")
+		})
 	})
-	describe('should not be throun', function () {
+	describe('should not throw', function () {
+		it('empty', function () {
+			expect(new Hakim([{ is: "empty" }]).validate(null)).to.be.true
+		})
+		it('are', function () {
+			expect(new Hakim([{ are: "latin" }]).validate(null)).to.be.false
+		})
 		it('exist', function () {
 			expect(new Hakim([{ exist: "latin" }]).validate(null)).to.be.false
+		})
+		it('hasLeading', function () {
+			expect(new Hakim([{ hasLeading: "latin" }]).validate(null)).to.be.false
+		})
+		it('hasString', function () {
+			expect(new Hakim([{ haveString: "foo" }]).validate(null)).to.be.false
+		})
+		it('lengthOf', function () {
+			expect(new Hakim([{ lengthOf: 3 }]).validate(null)).to.be.false
+		})
+	})
+
+})
+describe('logic backtracking', function () {
+	describe('should be true', function () {
+		it('is number', function () {
+			expect(new Hakim([{ is: "decimal" }]).validate("2.33")).to.be.true
+		})
+		it('is decimal', function () {
+			expect(new Hakim([{ dplacesGt: 3 }]).validate("2.33333")).to.be.true
+		})
+		it('is decimal', function () {
+			expect(new Hakim([{ dplacesGt: 3 }]).validate("3333")).to.be.false
+		})
+	})
+	describe('should be thrown', function () {
+		it('is number', function () {
+			expect(_ => new Hakim([{ is: "decimal" }]).validate("a2.33")).to.throw("can't campare number with")
+		})
+		it('is decimal2222', function () {
+			expect(new Hakim([{ dplacesGt: 3 }]).validate("3333")).to.be.false
 		})
 	})
 })

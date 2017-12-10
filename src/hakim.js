@@ -13,14 +13,18 @@ let res = {
 let entities = {
 	number: function (value) {
 		if (typeof value === "number") {
+			this.isNumber = true
 			return true
 		}
 		if (/^\-?[\d\.]+$/.test(value)) {
 			if (value.split(".").length > 2) {	// 55.
+				this.isNumber = false
 				return false
 			}
+			this.isNumber = true
 			return true
 		}
+		this.isNumber = false
 		return false
 	},
 	email: function (value) {
@@ -57,6 +61,7 @@ let entities = {
 		return res.url.test(value)
 	},
 	integer: function (value) {	// 3.00算小數
+		Hakim.ensureNumber(this, value)
 		// if (Number.isInteger(value)) {
 		// 	return true
 		// }
@@ -64,17 +69,22 @@ let entities = {
 		return res.integer.test(value)
 	},
 	decimal: function (value) {
+		Hakim.ensureNumber(this, value)
 		return !res.integer.test(value)
 	},
 	positive: function (value) {
+		Hakim.ensureNumber(this, value)
 		value = +value
 		return value > 0
 	},
 	negative: function (value) {
+		Hakim.ensureNumber(this, value)
 		value = +value
 		return value < 0
 	},
-
+	string: function (value) {
+		return typeof value == "string"
+	}
 }
 let elements = {
 	latin: function (char) {	// currently latin is the same to enLetter
@@ -115,13 +125,16 @@ let validators = {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
+		if (typeof value != "string") {
+			return false
+		}
 		let validator = elements[operand]
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
 		for (let i = 0, len = value.length; i < len; i++) {
 			let item = value[i]
-			if (!validator.call(null, item, operand)) {
+			if (!validator.call(this, item, operand)) {
 				return false
 			}
 		}
@@ -141,7 +154,7 @@ let validators = {
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
-		if(value==null || value==""){
+		if (value == null || value == "") {
 			return false
 		}
 		for (let i = 0, len = value.length; i < len; i++) {
@@ -171,8 +184,12 @@ let validators = {
 		if (!validator) {
 			throw new Error("no such a validator")
 		}
-		value = "" + value
-		if (validator.call(null, value[0])) {
+		if (!this.isString) {
+			if (!validators.is.call(this, "string", value)) {
+				return false
+			}
+		}
+		if (validator.call(this, value[0])) {
 			return true
 		}
 		return false
@@ -186,7 +203,7 @@ let validators = {
 			throw new Error("no such a validator")
 		}
 		value = "" + value
-		if (validator.call(null, value[0])) {
+		if (validator.call(this, value[0])) {
 			return false
 		}
 		return true
@@ -206,22 +223,28 @@ let validators = {
 		return value.includes(operand)
 	},
 	gt: function (operand, value) {
+		Hakim.ensureNumber(this, value)
 		value = +value
 		return operand < value
 	},
 	lt: function (operand, value) {
+		Hakim.ensureNumber(this, value)
 		value = +value
 		return operand > value
 	},
 	goe: function (operand, value) {
+		Hakim.ensureNumber(this, value)
 		value = +value
 		return value >= operand
 	},
 	loe: function (operand, value) {
+		Hakim.ensureNumber(this, value)
 		value = +value
 		return value <= operand
 	},
 	dplacesGt: function (operand, value) {
+		Hakim.ensureNumber(this, value)
+		//Hakim.ensureDecimal(this, value)
 		value = "" + value
 		let arr = value.split(".")
 		if (arr.length === 1) {
@@ -230,6 +253,8 @@ let validators = {
 		return arr[1].length > operand
 	},
 	dplacesLt: function (operand, value) {
+		Hakim.ensureNumber(this, value)
+		//Hakim.ensureDecimal(this, value)
 		value = "" + value
 		let arr = value.split(".")
 		if (arr.length === 1) {
@@ -238,12 +263,20 @@ let validators = {
 		return arr[1].length < operand
 	},
 	decimal: function (operand, value) {	//@del:0.3.0
+		Hakim.ensureNumber(this, value)
 		value = "" + value
 		let arr = value.split(".")
 		let length = arr.length === 1 ? 0 : arr[1].length
-		return length === +operand
+		if (length === +operand) {
+			this.isDecimal = true
+			return true
+		}
+		this.isDecimal = false
+		return false
 	},
 	dlengthOf: function (operand, value) {
+		Hakim.ensureNumber(this, value)
+		//Hakim.ensureDecimal(this, value)
 		value = "" + value
 		let arr = value.split(".")
 		let length = arr.length === 1 ? 0 : arr[1].length
@@ -274,49 +307,65 @@ let validators = {
 
 }
 
-let core = {
-	validateItem: function (obj, value) {
-		for (let key in obj) {
-			if (!validators[key]) {
-				throw new Error(`no such directive:${key}`)
-			}
-			if (!validators[key].call(this, obj[key], value)) {	// 一个不过，就都不过
-				return false
-			}
-		}
-		return true
-	},
-	validate: function (criterion, value) {
-		if (!criterion) {
-			throw new Error("argument needed")
-		}
-		if (!Array.isArray(criterion)) {
-			return this.validateItem(criterion, value)
-		}
-		let rules = criterion
-		let isParallel = false
-		if (rules.length > 1 && (rules[rules.length - 1] === true)) {
-			isParallel = true
-		}
-		rules = rules.filter(item => {	// empty object will be filtered
-			for (let key in item) {
-				if (item.hasOwnProperty(key)) {
-					return true
-				}
-			}
-		})
-		if (isParallel) {
-			return rules.some(item => {
-				return this.validate(item, value)
-			})
-		}
-		return rules.every(item => {
-			return this.validate(item, value)
-		})
-	}
-}
+
 let Hakim = function (criterion) {
 	this.criterion = criterion
+	this.isNumber = false	// 改成一個session
+	this.isString = false
+	this.isDecimal = false
+}
+Hakim.ensureNumber = function (hakim, value) {
+	if (!hakim.isNumber) {
+		if (!validators.is.call(hakim, "number", value)) {
+			throw new Error("can't campare number with " + value)
+		}
+	}
+}
+Hakim.ensureDecimal = function (hakim, value) {
+	if (!hakim.isDecimal) {
+		if (!validators.is.call(hakim, "decimal", value)) {
+			throw new Error("can't campare decimal digits with " + value)
+		}
+	}
+}
+Hakim.validateItem = function (that, obj, value) {
+	for (let key in obj) {
+		if (!validators[key]) {
+			throw new Error(`no such directive:${key}`)
+		}
+		if (!validators[key].call(that, obj[key], value)) {	// 一个不过，就都不过
+			return false
+		}
+	}
+	return true
+}
+Hakim.validate = function (that, criterion, value) {
+	if (!criterion) {
+		throw new Error("argument needed")
+	}
+	if (!Array.isArray(criterion)) {
+		return this.validateItem(that, criterion, value)
+	}
+	let rules = criterion
+	let isParallel = false
+	if (rules.length > 1 && (rules[rules.length - 1] === true)) {
+		isParallel = true
+	}
+	rules = rules.filter(item => {	// empty object will be filtered
+		for (let key in item) {
+			if (item.hasOwnProperty(key)) {
+				return true
+			}
+		}
+	})
+	if (isParallel) {
+		return rules.some(item => {
+			return this.validate(that, item, value)
+		})
+	}
+	return rules.every(item => {
+		return this.validate(that, item, value)
+	})
 }
 Hakim.extend = function (part, name, asset) {
 	if (typeof name == "string") {
@@ -339,7 +388,10 @@ Hakim.extend = function (part, name, asset) {
 	}
 }
 Hakim.prototype.validate = function (value) {
-	let result = core.validate(this.criterion, value)
+	this.isNumber = false
+	this.isString = false
+	this.isDecimal = false
+	let result = Hakim.validate(this, this.criterion, value)
 	if (NODE_ENV !== "production") {
 		const chalk = require('chalk')
 		// if(result){
