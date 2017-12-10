@@ -52,7 +52,7 @@
     "karma-requirejs": "^1.1.0",
     "karma-webpack": "^2.0.5",
     "mocha": "^3.4.2",
-    "nightwatch": "^0.9.16",
+    "nightwatch": "^0.9.19",
     "nyc": "^11.2.1",
     "rimraf": "^2.6.1",
     "rollup": "^0.48.2",
@@ -61,6 +61,5 @@
     "chromedriver": "^2.33.1",
     "webpack": "^3.6.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
