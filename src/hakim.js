@@ -1,6 +1,5 @@
 /*global NODE_ENV*/
 /*eslint no-undef: "warn"*/
-/*eslint-env node*/
 
 
 let res = {

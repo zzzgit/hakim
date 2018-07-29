@@ -1,5 +1,5 @@
-/* eslint-disable*/
-let path = require("path");
+/* eslint-env node */
+let path = require("path")
 let webpack = require("webpack")
 
 module.exports = {
