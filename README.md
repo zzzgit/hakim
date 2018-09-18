@@ -4,7 +4,9 @@
 a javascript validation lib
 https://www.npmjs.com/package/hakim
 ## why
-It has been a long time since I need to find an easy to use javascript validation lib. Every libs I found on github is not suit for me. So finally I decided to make a new wheel.
+It has been a long time since I need to find an easy to use javascript validation lib for browser environments. Every libs I found on github is not suit for me. So finally I decided to make a new wheel.
+The most significant different between `Node.js` envirement and browser envirment is that in the latter numbers maybe represented by a string variable(e.g: if using a Two-Way Data Binding framework). So, validate a number in browser may be more difficult than in Node.js.
+Another different is that there are more logic disjunction cases in browser environment.
 ## installation
 To install via npm, run:
 ```javascript
