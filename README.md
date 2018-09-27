@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/zzzgit/hakim.png)](https://travis-ci.org/zzzgit/hakim)
 [![Join the chat at https://gitter.im/hakim-lib/Lobby](https://badges.gitter.im/hakim-lib/Lobby.svg)](https://gitter.im/hakim-lib/Lobby)
 # hakim
-a javascript validation lib for browser environment only.
+a validation lib for browser environment only.
 https://www.npmjs.com/package/hakim
 ## why
 It has been a long time since I need to find an easy to use javascript validation lib for browser environments. Every libs I found on github is not suit for me. So finally I decided to make a new wheel.
