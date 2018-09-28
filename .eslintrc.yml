@@ -20,3 +20,5 @@ rules:
     - warn
   no-console:
     - off
+  no-var:
+    - error
