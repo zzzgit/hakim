@@ -2,7 +2,7 @@
   "name": "hakim",
   "version": "0.2.8",
   "description": "a validation lib",
-  "main": "index.js",
+  "browser": "index.js",
   "scripts": {
     "clear": "rimraf built coverage .nyc_output",
     "build": "npm run clear && cross-env NODE_ENV=production rollup -c",
