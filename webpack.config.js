@@ -3,16 +3,15 @@ let path = require("path")
 let webpack = require("webpack")
 
 module.exports = {
-	entry: ["./src/hakim.js",],
+	// entry: ["./src/hakim.js",],
 	output: {
 		path: path.resolve(__dirname, "../built/"),
-		filename: 'hakim.js',
+		// filename: 'hakim.js',
 		chunkFilename: "[id].js",
 		publicPath: "/"
 	},
 	resolve: {
-		alias: {
-		},
+		alias: { },
 		extensions: ['.js'],
 	},
 	module: {
@@ -29,11 +28,4 @@ module.exports = {
 			//NODE_ENV: JSON.stringify(process.env.NODE_ENV),
 		})
 	],
-	// devServer: {
-	// 	port: 8083,
-	// 	historyApiFallback: true,
-	// 	disableHostCheck: true,	//Invalid Host header
-	// 	host: "0.0.0.0",
-	// 	public: "127.0.0.1:8083"
-	// },
 }

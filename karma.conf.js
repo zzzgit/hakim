@@ -1,7 +1,7 @@
 /* eslint-env node */
 module.exports = function (config) {
 	config.set({
-		basePath: '',
+		basePath: './',
 		frameworks: ['mocha'],
 		files: ['./test/unit/*'],
 		plugins: [
@@ -18,9 +18,9 @@ module.exports = function (config) {
 			
 		],
 		preprocessors: {
-			'./test/unit/*.js': ['webpack','coverage'],
+			'./test/unit/*.js': ['webpack', 'coverage'],
 			'./built/*.js': ['coverage'],
-			'./src/*.js': ['coverage'],
+			// './src/*.js': ['coverage'],
 		},
 		coverageReporter: {
 			type: 'text',
@@ -32,6 +32,7 @@ module.exports = function (config) {
 		webpackMiddleware: {
 			noInfo: true
 		},
+		hostname: "127.0.0.1",
 		port: 9876,
 		colors: true,
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
@@ -45,8 +46,8 @@ module.exports = function (config) {
 		browsers: [
 			//'Chrome',
 			'Firefox',
-			//'IE',
-			//'PhantomJS',
+			// 'IE',
+			// 'PhantomJS',
 			//'Edge',
 		],
 		singleRun: true,

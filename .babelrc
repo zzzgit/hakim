@@ -1,13 +1,11 @@
 {
 	"presets": [
 		[
-			"env",
+			"@babel/preset-env",
 			{
 				"targets": {
 					"browsers": [
 						"last 2 Chrome major versions",
-						"last 2 Firefox major versions",
-						"last 2 Edge major versions",
 						"ie > 10"
 					]
 				},
@@ -16,6 +14,10 @@
 		]
 	],
 	"plugins": [
+		[
+			"@babel/plugin-proposal-object-rest-spread"
+		]
 	],
+	"comments": false,
 	"sourceType": "module"
 }
