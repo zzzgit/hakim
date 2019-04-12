@@ -11,16 +11,15 @@ module.exports = function (config) {
 			"karma-ie-launcher",
 			//"karma-edge-launcher", 
 			'karma-mocha',
-			'karma-webpack',
-			'karma-babel-preprocessor',
-			'karma-coverage',
 			'karma-mocha-reporter',
+			'karma-webpack',
+			'karma-coverage',
 			
 		],
 		preprocessors: {
 			'./test/unit/*.js': ['webpack', 'coverage'],
 			'./built/*.js': ['coverage'],
-			// './src/*.js': ['coverage'],
+			'./src/*.js': ['coverage'],
 		},
 		coverageReporter: {
 			type: 'text',
@@ -45,8 +44,8 @@ module.exports = function (config) {
 
 		browsers: [
 			//'Chrome',
-			'Firefox',
-			// 'IE',
+			// 'Firefox',
+			'IE',
 			// 'PhantomJS',
 			//'Edge',
 		],

@@ -23,6 +23,7 @@ module.exports = {
 			}
 		]
 	},
+	devtool: 'inline-source-map',
 	plugins: [
 		new webpack.DefinePlugin({
 			//NODE_ENV: JSON.stringify(process.env.NODE_ENV),

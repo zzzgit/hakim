@@ -2,13 +2,15 @@
   "name": "hakim",
   "version": "0.2.9",
   "description": "a validation lib",
-  "browser": "index.js",
+  "main": "src/hakim.js",
+  "browser": "built/hakim.js",
   "scripts": {
     "clear": "rimraf built coverage .nyc_output",
     "build": "npm run clear && cross-env NODE_ENV=production rollup -c",
-    "mocha": "npm run build && mocha --colors --reporter dot ./test/unit/test.js",
-    "nyc": "npm run build && nyc mocha ./test/unit/test.js --colors --reporter dot",
-    "karma": "npm run build && cross-env karma start",
+    "mocha": "mocha --colors --reporter dot ./test/unit/test.js",
+    "test:node": "cross-env MODE=node nyc npm run mocha",
+    "karma": "karma start",
+    "test:browser": "cross-env MODE=browser npm run karma",
     "push": "git add ./ && git commit && git pull && git push",
     "deploy": "npm run build && npm run push && npm publish",
     "build/webpack": "cross-env NODE_ENV=prod webpack --env.foo=bar --mode=production --profile --progress --config ./webpack.config.js"
@@ -43,9 +45,7 @@
     "chalk": "^2.4.2",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
-    "jest-codemods": "^0.19.1",
     "karma": "^4.0.1",
-    "karma-babel-preprocessor": "^8.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
     "karma-firefox-launcher": "^1.1.0",
@@ -53,7 +53,6 @@
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
     "karma-phantomjs-launcher": "^1.0.4",
-    "karma-requirejs": "^1.1.0",
     "karma-webpack": "^3.0.5",
     "mocha": "^6.1.2",
     "nyc": "^13.3.0",
@@ -64,5 +63,6 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }

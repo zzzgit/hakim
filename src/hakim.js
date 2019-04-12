@@ -391,20 +391,19 @@ Hakim.prototype.validate = function (value) {
 	this.isString = false
 	this.isDecimal = false
 	let result = Hakim.validate(this, this.criterion, value)
-	if (NODE_ENV !== "production") {
-		const chalk = require('chalk')
-		// if(result){
-		// 	console.log(chalk.green("hakim rules:", this.criterion, "validate:", value))
-		// }else{
-		// 	console.log(chalk.yellow("hakim rules:", this.criterion, "validate:", value))
-		// }
-	}
+	// if (NODE_ENV !== "production") {
+	// const chalk = require('chalk')
+	// if(result){
+	// 	console.log(chalk.green("hakim rules:", this.criterion, "validate:", value))
+	// }else{
+	// 	console.log(chalk.yellow("hakim rules:", this.criterion, "validate:", value))
+	// }
+	// }
 	return result
 }
 
 
-export default Hakim
-//module.exports = Hakim
+module.exports = Hakim
 
 
 //@todo uninstall functionality is needed
