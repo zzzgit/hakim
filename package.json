@@ -1,6 +1,6 @@
 {
   "name": "hakim",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "a validation lib",
   "main": "src/hakim.js",
   "browser": "built/hakim.js",
