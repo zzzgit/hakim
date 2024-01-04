@@ -7,16 +7,6 @@ extends: 'eslint:recommended'
 parserOptions:
   sourceType: module
 rules:
-  indent:
-    - error
-    - tab
-  linebreak-style:
-    - off
-  quotes:
-    - off
-  semi:
-    - error
-    - never
   no-useless-escape:
     - warn
   no-console:

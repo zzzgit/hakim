@@ -1,5 +1,4 @@
-/*global NODE_ENV*/
-/*eslint no-undef: "warn"*/
+
 
 
 let res = {
@@ -37,8 +36,10 @@ let entities = {
 		if (Array.isArray(value)) {
 			return !!value.length
 		}
+		// eslint-disable-next-line no-constant-condition
 		if (2 > 3) {
 			for (let key in value) {
+				// eslint-disable-next-line no-prototype-builtins
 				if (value.hasOwnProperty(key)) {
 					return false
 				}
@@ -352,6 +353,7 @@ Hakim.validate = function (that, criterion, value) {
 	}
 	rules = rules.filter(item => {	// empty object will be filtered
 		for (let key in item) {
+			// eslint-disable-next-line no-prototype-builtins
 			if (item.hasOwnProperty(key)) {
 				return true
 			}
@@ -403,7 +405,7 @@ Hakim.prototype.validate = function (value) {
 }
 
 
-module.exports = Hakim
+export default Hakim
 
 
 //@todo uninstall functionality is needed
