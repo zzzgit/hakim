@@ -61,7 +61,7 @@ let entities = {
 		return res.url.test(value)
 	},
 	integer: function (value) {	// 3.00算小數
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		// if (Number.isInteger(value)) {
 		// 	return true
 		// }
@@ -69,16 +69,16 @@ let entities = {
 		return res.integer.test(value)
 	},
 	decimal: function (value) {
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		return !res.integer.test(value)
 	},
 	positive: function (value) {
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		value = +value
 		return value > 0
 	},
 	negative: function (value) {
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		value = +value
 		return value < 0
 	},
@@ -223,28 +223,28 @@ let validators = {
 		return value.includes(operand)
 	},
 	gt: function (operand, value) {
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		value = +value
 		return operand < value
 	},
 	lt: function (operand, value) {
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		value = +value
 		return operand > value
 	},
 	goe: function (operand, value) {
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		value = +value
 		return value >= operand
 	},
 	loe: function (operand, value) {
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		value = +value
 		return value <= operand
 	},
 	dplacesGt: function (operand, value) {
-		Hakim.ensureNumber(this, value)
-		//Hakim.ensureDecimal(this, value)
+		Hagim.ensureNumber(this, value)
+		//Hagim.ensureDecimal(this, value)
 		value = "" + value
 		let arr = value.split(".")
 		if (arr.length === 1) {
@@ -253,8 +253,8 @@ let validators = {
 		return arr[1].length > operand
 	},
 	dplacesLt: function (operand, value) {
-		Hakim.ensureNumber(this, value)
-		//Hakim.ensureDecimal(this, value)
+		Hagim.ensureNumber(this, value)
+		//Hagim.ensureDecimal(this, value)
 		value = "" + value
 		let arr = value.split(".")
 		if (arr.length === 1) {
@@ -263,7 +263,7 @@ let validators = {
 		return arr[1].length < operand
 	},
 	decimal: function (operand, value) {	//@del:0.3.0
-		Hakim.ensureNumber(this, value)
+		Hagim.ensureNumber(this, value)
 		value = "" + value
 		let arr = value.split(".")
 		let length = arr.length === 1 ? 0 : arr[1].length
@@ -275,8 +275,8 @@ let validators = {
 		return false
 	},
 	dlengthOf: function (operand, value) {
-		Hakim.ensureNumber(this, value)
-		//Hakim.ensureDecimal(this, value)
+		Hagim.ensureNumber(this, value)
+		//Hagim.ensureDecimal(this, value)
 		value = "" + value
 		let arr = value.split(".")
 		let length = arr.length === 1 ? 0 : arr[1].length
@@ -308,27 +308,27 @@ let validators = {
 }
 
 
-let Hakim = function (criterion) {
+let Hagim = function (criterion) {
 	this.criterion = criterion
 	this.isNumber = false	// 改成一個session
 	this.isString = false
 	this.isDecimal = false
 }
-Hakim.ensureNumber = function (hakim, value) {
-	if (!hakim.isNumber) {
-		if (!validators.is.call(hakim, "number", value)) {
+Hagim.ensureNumber = function (hagim, value) {
+	if (!hagim.isNumber) {
+		if (!validators.is.call(hagim, "number", value)) {
 			throw new Error("can't campare number with " + value)
 		}
 	}
 }
-Hakim.ensureDecimal = function (hakim, value) {
-	if (!hakim.isDecimal) {
-		if (!validators.is.call(hakim, "decimal", value)) {
+Hagim.ensureDecimal = function (hagim, value) {
+	if (!hagim.isDecimal) {
+		if (!validators.is.call(hagim, "decimal", value)) {
 			throw new Error("can't campare decimal digits with " + value)
 		}
 	}
 }
-Hakim.validateItem = function (that, obj, value) {
+Hagim.validateItem = function (that, obj, value) {
 	for (let key in obj) {
 		if (!validators[key]) {
 			throw new Error(`no such directive:${key}`)
@@ -339,7 +339,7 @@ Hakim.validateItem = function (that, obj, value) {
 	}
 	return true
 }
-Hakim.validate = function (that, criterion, value) {
+Hagim.validate = function (that, criterion, value) {
 	if (!criterion) {
 		throw new Error("argument needed")
 	}
@@ -368,7 +368,7 @@ Hakim.validate = function (that, criterion, value) {
 		return this.validate(that, item, value)
 	})
 }
-Hakim.extend = function (part, name, asset) {
+Hagim.extend = function (part, name, asset) {
 	if (typeof name == "string") {
 		if (part == "validators") {	//@del:0.3.0
 			part = "entities"
@@ -388,24 +388,24 @@ Hakim.extend = function (part, name, asset) {
 		entities[key] = assets[key]	// a bug here
 	}
 }
-Hakim.prototype.validate = function (value) {
+Hagim.prototype.validate = function (value) {
 	this.isNumber = false
 	this.isString = false
 	this.isDecimal = false
-	let result = Hakim.validate(this, this.criterion, value)
+	let result = Hagim.validate(this, this.criterion, value)
 	// if (NODE_ENV !== "production") {
 	// const chalk = require('chalk')
 	// if(result){
-	// 	console.log(chalk.green("hakim rules:", this.criterion, "validate:", value))
+	// 	console.log(chalk.green("hagim rules:", this.criterion, "validate:", value))
 	// }else{
-	// 	console.log(chalk.yellow("hakim rules:", this.criterion, "validate:", value))
+	// 	console.log(chalk.yellow("hagim rules:", this.criterion, "validate:", value))
 	// }
 	// }
 	return result
 }
 
 
-export default Hakim
+export default Hagim
 
 
 //@todo uninstall functionality is needed

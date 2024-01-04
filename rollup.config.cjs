@@ -2,9 +2,9 @@ let path = require("path")
 let replace = require("rollup-plugin-replace")
 
 module.exports = {
-	input: path.resolve(__dirname, "./src/hakim.js"),
+	input: path.resolve(__dirname, "./src/hagim.js"),
 	output: {
-		file: path.resolve(__dirname, "./built/hakim.js"),
+		file: path.resolve(__dirname, "./built/hagim.js"),
 	},
 	plugins: [
 		replace({
