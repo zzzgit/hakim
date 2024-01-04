@@ -77,7 +77,7 @@ describe('isNot', function () {
 			expect(new Hakim([{ isNot: "ip" }]).validate("299.0.0")).to.be.true
 		})
 		it('url', function () {
-			expect(new Hakim([{ isNot: "url" }]).validate("D:\Program Files")).to.be.true
+			expect(new Hakim([{ isNot: "url" }]).validate("D:\\Program Files")).to.be.true
 		})
 	})
 	describe('should be false', function () {
@@ -334,12 +334,12 @@ describe('lengthGt', function () {
 })
 describe('match', function () {
 	describe('should be true', function () {
-		it('/\d{3}/', function () {
+		it('/\\d{3}/', function () {
 			expect(new Hakim([{ match: /\d{3}/ }]).validate("222")).to.be.true
 		})
 	})
 	describe('should be false', function () {
-		it('/\d{3}/', function () {
+		it('/\\d{3}/', function () {
 			expect(new Hakim([{ match: /\d{3}/ }]).validate("")).to.be.false
 		})
 	})
