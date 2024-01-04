@@ -1,6 +1,6 @@
 # hagim
 
-[![Build Status](https://travis-ci.org/zzzgit/hagim.png)](https://travis-ci.org/zzzgit/hagim)
+[![Build Status](https://travis-ci.org/zzzgit/hagim.png)](https://travis-ci.org/zzzgit/hakim)
 [![Join the chat at https://gitter.im/hagim-lib/Lobby](https://badges.gitter.im/hagim-lib/Lobby.svg)](https://gitter.im/hagim-lib/Lobby)
 
 a validation lib for browser environment only.
