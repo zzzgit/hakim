@@ -176,7 +176,7 @@ let validators = {
 		value = "" + value
 		return value.indexOf(operand) !== 0
 	},
-	hasLeading: function (operand, value) {
+	leadWith: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
@@ -194,7 +194,7 @@ let validators = {
 		}
 		return false
 	},
-	noLeading: function (operand, value) {
+	notLeadWith: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
@@ -347,9 +347,9 @@ Hagim.validate = function (that, criterion, value) {
 		return this.validateItem(that, criterion, value)
 	}
 	let rules = criterion
-	let isParallel = false
+	let isOr = false
 	if (rules.length > 1 && (rules[rules.length - 1] === true)) {
-		isParallel = true
+		isOr = true
 	}
 	rules = rules.filter(item => {	// empty object will be filtered
 		for (let key in item) {
@@ -359,7 +359,7 @@ Hagim.validate = function (that, criterion, value) {
 			}
 		}
 	})
-	if (isParallel) {
+	if (isOr) {
 		return rules.some(item => {
 			return this.validate(that, item, value)
 		})

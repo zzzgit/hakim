@@ -78,7 +78,7 @@ new Hagim([{is: "number"}, {is: "integer"}]).validate(2) // true
 
 ### is
 
-whether the string represent a special string or number(more details on entities chapter)
+whether the string represent a special string or number(more details on entities section)
 
 ### isNot
 
@@ -86,7 +86,7 @@ the opposite of `is`
 
 ### are
 
-whether the all the members of the string belong to a certain kind of characters(more details on elements chapter)
+whether the all the members of the string belong to a certain kind of characters(more details on elements section)
 
 ### match
 
@@ -94,7 +94,7 @@ whether the string match a certain regular express. Under the hood the function 
 
 ### exist
 
-whether the string includes a certain kind of characters(more details on elements chapter)
+whether the string includes a certain kind of characters(more details on elements section)
 
 ### haveString
 
@@ -160,13 +160,13 @@ whether the string begin with a certain word
 
 whether the string don't begin with a certain word
 
-### hasLeading
+### leadWith
 
-where the first member of the string is belong to a certain kind of characters(more details on elements chapter)
+whether the first member of the string belongs to a certain kind of characters(more details on elements section)
 
-### noLeading
+### notLeadWith
 
-where the first member of the string is `not` belong to a certain kind of characters(more details on elements chapter)
+whether the first member of the string does `not` belong to a certain kind of characters(more details on elements section)
 
 ## entities
 
@@ -177,7 +177,7 @@ let hagim = new Hagim([{is: "number"}])
 hagim.validate("2")  // true
 ```
 
-If there is no such a entity match you need, you can extend this lib by yourself, check plugin chapter for details.
+If there is no such a entity match you need, you can extend this lib by yourself, check plugin section for details.
 
 ### number
 

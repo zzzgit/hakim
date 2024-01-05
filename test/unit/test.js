@@ -212,27 +212,27 @@ describe('notBeginWith', function () {
 		})
 	})
 })
-describe('hasLeading', function () {
+describe('leadWith', function () {
 	describe('should be true', function () {
 		it('latin', function () {
-			expect(new Hagim([{ hasLeading: "latin" }]).validate("a0zzab")).to.be.true
+			expect(new Hagim([{ leadWith: "latin" }]).validate("a0zzab")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('latin', function () {
-			expect(new Hagim([{ hasLeading: "latin" }]).validate("0afda")).to.be.false
+			expect(new Hagim([{ leadWith: "latin" }]).validate("0afda")).to.be.false
 		})
 	})
 })
-describe('noLeading', function () {
+describe('notLeadWith', function () {
 	describe('should be true', function () {
 		it('digit', function () {
-			expect(new Hagim([{ noLeading: "digit" }]).validate("a0zzab")).to.be.true
+			expect(new Hagim([{ notLeadWith: "digit" }]).validate("a0zzab")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('digit', function () {
-			expect(new Hagim([{ noLeading: "digit" }]).validate("0afda")).to.be.false
+			expect(new Hagim([{ notLeadWith: "digit" }]).validate("0afda")).to.be.false
 		})
 	})
 })
@@ -417,8 +417,8 @@ describe('exception', function () {
 		it('exist', function () {
 			expect(new Hagim([{ exist: "latin" }]).validate(null)).to.be.false
 		})
-		it('hasLeading', function () {
-			expect(new Hagim([{ hasLeading: "latin" }]).validate(null)).to.be.false
+		it('notLeadWith', function () {
+			expect(new Hagim([{ notLeadWith: "latin" }]).validate(null)).to.be.false
 		})
 		it('hasString', function () {
 			expect(new Hagim([{ haveString: "foo" }]).validate(null)).to.be.false
