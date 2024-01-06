@@ -86,7 +86,7 @@ the opposite of `is`
 
 ### are
 
-whether the all the members of the string belong to a certain kind of characters(more details on elements section)
+whether all the members of a string belong to a certain character set(more details on elements section)
 
 ### match
 
@@ -152,19 +152,19 @@ whether the length of the string is lower than the operand
 
 whether the length of the string equsls the operand
 
-### beginWith
+### beginWithSub
 
 whether the string begin with a certain word
 
-### notBeginWith
+### notBeginWithSub
 
 whether the string don't begin with a certain word
 
-### leadWith
+### startWithSet
 
 whether the first member of the string belongs to a certain kind of characters(more details on elements section)
 
-### notLeadWith
+### notStartWithSet
 
 whether the first member of the string does `not` belong to a certain kind of characters(more details on elements section)
 
@@ -217,7 +217,7 @@ whether the string represent a url
 
 ## elements
 
-Each element represents a certain character set, like Latin letters or digits. `are` can be used to judge whether all of members of a string are all belong to a certain set.
+Each element represents a certain character set, like Latin letters or digits. `are` can be used to judge whether all of the members of a string belong to a certain set.
 
 ### latin
 

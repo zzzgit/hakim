@@ -168,15 +168,15 @@ let validators = {
 	exist: function (operand, value) {
 		return validators.includes(operand, value)
 	},
-	beginWith: function (operand, value) {
+	beginWithSub: function (operand, value) {
 		value = "" + value
 		return value.indexOf(operand) === 0
 	},
-	notBeginWith: function (operand, value) {
+	notBeginWithSub: function (operand, value) {
 		value = "" + value
 		return value.indexOf(operand) !== 0
 	},
-	leadWith: function (operand, value) {
+	startWithSet: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
 		}
@@ -194,7 +194,7 @@ let validators = {
 		}
 		return false
 	},
-	notLeadWith: function (operand, value) {
+	notStartWithSet: function (operand, value) {
 		if (!operand) {
 			throw new Error("argument needed")
 		}

@@ -188,51 +188,51 @@ describe('haveString', function () {
 		})
 	})
 })
-describe('beginWith', function () {
+describe('beginWithSub', function () {
 	describe('should be true', function () {
-		it('beginWith', function () {
-			expect(new Hagim([{ beginWith: "0" }]).validate("0zzab")).to.be.true
+		it('beginWithSub', function () {
+			expect(new Hagim([{ beginWithSub: "0" }]).validate("0zzab")).to.be.true
 		})
 	})
 	describe('should be false', function () {
-		it('beginWith', function () {
-			expect(new Hagim([{ beginWith: "0" }]).validate("403883")).to.be.false
+		it('beginWithSub', function () {
+			expect(new Hagim([{ beginWithSub: "0" }]).validate("403883")).to.be.false
 		})
 	})
 })
-describe('notBeginWith', function () {
+describe('notBeginWithSub', function () {
 	describe('should be true', function () {
-		it('notBeginWith', function () {
-			expect(new Hagim([{ notBeginWith: "0" }]).validate("a0zzab")).to.be.true
+		it('notBeginWithSub', function () {
+			expect(new Hagim([{ notBeginWithSub: "0" }]).validate("a0zzab")).to.be.true
 		})
 	})
 	describe('should be false', function () {
-		it('notBeginWith', function () {
-			expect(new Hagim([{ notBeginWith: "0" }]).validate("03883")).to.be.false
+		it('notBeginWithSub', function () {
+			expect(new Hagim([{ notBeginWithSub: "0" }]).validate("03883")).to.be.false
 		})
 	})
 })
-describe('leadWith', function () {
+describe('startWithSet', function () {
 	describe('should be true', function () {
 		it('latin', function () {
-			expect(new Hagim([{ leadWith: "latin" }]).validate("a0zzab")).to.be.true
+			expect(new Hagim([{ startWithSet: "latin" }]).validate("a0zzab")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('latin', function () {
-			expect(new Hagim([{ leadWith: "latin" }]).validate("0afda")).to.be.false
+			expect(new Hagim([{ startWithSet: "latin" }]).validate("0afda")).to.be.false
 		})
 	})
 })
-describe('notLeadWith', function () {
+describe('notStartWithSet', function () {
 	describe('should be true', function () {
 		it('digit', function () {
-			expect(new Hagim([{ notLeadWith: "digit" }]).validate("a0zzab")).to.be.true
+			expect(new Hagim([{ notStartWithSet: "digit" }]).validate("a0zzab")).to.be.true
 		})
 	})
 	describe('should be false', function () {
 		it('digit', function () {
-			expect(new Hagim([{ notLeadWith: "digit" }]).validate("0afda")).to.be.false
+			expect(new Hagim([{ notStartWithSet: "digit" }]).validate("0afda")).to.be.false
 		})
 	})
 })
@@ -417,8 +417,8 @@ describe('exception', function () {
 		it('exist', function () {
 			expect(new Hagim([{ exist: "latin" }]).validate(null)).to.be.false
 		})
-		it('notLeadWith', function () {
-			expect(new Hagim([{ notLeadWith: "latin" }]).validate(null)).to.be.false
+		it('notStartWithSet', function () {
+			expect(new Hagim([{ notStartWithSet: "latin" }]).validate(null)).to.be.false
 		})
 		it('hasString', function () {
 			expect(new Hagim([{ haveString: "foo" }]).validate(null)).to.be.false
