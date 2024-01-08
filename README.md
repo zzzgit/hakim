@@ -205,7 +205,7 @@ whether the string represents a email
 
 ### empty
 
-whether the string is `""` or `null` or `undefined`
+whether the string is `""`, `null`, `undefined` or `[]`
 
 ### ip
 

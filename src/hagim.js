@@ -2,11 +2,10 @@
 
 
 let res = {
-	email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+	email: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
 	ip: /(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)/,
 	url: /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/,
-	integer: /^\-?\d{1,15}$/,
-	money: /^([1-9]\d*(\.\d+)?|0)$/	//@del:0.3
+	integer: /^-?\d{1,15}$/,
 }
 let entities = {
 	number: function (value) {
@@ -14,8 +13,8 @@ let entities = {
 			this.isNumber = true
 			return true
 		}
-		if (/^\-?[\d\.]+$/.test(value)) {
-			if (value.split(".").length > 2) {	// 55.
+		if (/^-?[\d.]+$/.test(value)) {
+			if (value.split(".").length > 2) { 
 				this.isNumber = false
 				return false
 			}
@@ -47,10 +46,6 @@ let entities = {
 			return true
 		}
 		return false
-	},
-	money: function (value) {	// useless
-		value = "" + value
-		return res.money.test(value)
 	},
 	ip: function (value) {
 		value = "" + value
@@ -146,7 +141,7 @@ let validators = {
 		}
 		return operand.test(value + "")
 	},
-	includes: function (operand, value) {	//@del:0.5.0
+	includes: function (operand, value) {	//@del:0.5.0 same as exist, have is also a good name
 		if (!operand) {
 			throw new Error("argument needed")
 		}
@@ -262,18 +257,6 @@ let validators = {
 		}
 		return arr[1].length < operand
 	},
-	decimal: function (operand, value) {	//@del:0.3.0
-		Hagim.ensureNumber(this, value)
-		value = "" + value
-		let arr = value.split(".")
-		let length = arr.length === 1 ? 0 : arr[1].length
-		if (length === +operand) {
-			this.isDecimal = true
-			return true
-		}
-		this.isDecimal = false
-		return false
-	},
 	dlengthOf: function (operand, value) {
 		Hagim.ensureNumber(this, value)
 		//Hagim.ensureDecimal(this, value)
@@ -371,10 +354,10 @@ Hagim.validate = function (that, criterion, value) {
 Hagim.extend = function (part, name, asset) {
 	if (typeof name == "string") {
 		if (part == "validators") {	//@del:0.3.0
-			part = "entities"
+			// part = "entities"
 		}
 		if (part == "characterSets") {	//@del:0.3.0
-			part = "elements"
+			// part = "elements"
 		}
 		if (part == "entities") {
 			return entities[name] = asset
@@ -393,14 +376,6 @@ Hagim.prototype.validate = function (value) {
 	this.isString = false
 	this.isDecimal = false
 	let result = Hagim.validate(this, this.criterion, value)
-	// if (NODE_ENV !== "production") {
-	// const chalk = require('chalk')
-	// if(result){
-	// 	console.log(chalk.green("hagim rules:", this.criterion, "validate:", value))
-	// }else{
-	// 	console.log(chalk.yellow("hagim rules:", this.criterion, "validate:", value))
-	// }
-	// }
 	return result
 }
 
@@ -408,4 +383,3 @@ Hagim.prototype.validate = function (value) {
 export default Hagim
 
 
-//@todo uninstall functionality is needed
