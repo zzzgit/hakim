@@ -257,6 +257,18 @@ let validators = {
 		}
 		return arr[1].length < operand
 	},
+	decimal: function (operand, value) {	//@del:0.3.0 有两个decimal函数，关系不清楚，这个不能删除，会报错
+		Hagim.ensureNumber(this, value)
+		value = "" + value
+		let arr = value.split(".")
+		let length = arr.length === 1 ? 0 : arr[1].length
+		if (length === +operand) {
+			this.isDecimal = true
+			return true
+		}
+		this.isDecimal = false
+		return false
+	},
 	dlengthOf: function (operand, value) {
 		Hagim.ensureNumber(this, value)
 		//Hagim.ensureDecimal(this, value)
@@ -354,10 +366,10 @@ Hagim.validate = function (that, criterion, value) {
 Hagim.extend = function (part, name, asset) {
 	if (typeof name == "string") {
 		if (part == "validators") {	//@del:0.3.0
-			// part = "entities"
+			part = "entities"
 		}
 		if (part == "characterSets") {	//@del:0.3.0
-			// part = "elements"
+			part = "elements"
 		}
 		if (part == "entities") {
 			return entities[name] = asset

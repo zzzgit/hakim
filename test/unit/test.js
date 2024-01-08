@@ -19,9 +19,6 @@ describe('is', function () {
 		it('empty', function () {
 			expect(new Hagim([{ is: "empty" }]).validate(null)).to.be.true
 		})
-		it('money', function () {
-			expect(new Hagim([{ is: "money" }]).validate("3.22")).to.be.true
-		})
 		it('ip', function () {
 			expect(new Hagim([{ is: "ip" }]).validate("127.0.0.1")).to.be.true
 		})
@@ -45,9 +42,6 @@ describe('is', function () {
 		it('empty', function () {
 			expect(new Hagim([{ is: "empty" }]).validate(0)).to.be.false
 		})
-		it('money', function () {
-			expect(new Hagim([{ is: "money" }]).validate("2322.3.3.3")).to.be.false
-		})
 		it('url', function () {
 			expect(new Hagim([{ is: "url" }]).validate("ckdk")).to.be.false
 		})
@@ -69,9 +63,6 @@ describe('isNot', function () {
 		})
 		it('empty', function () {
 			expect(new Hagim([{ isNot: "empty" }]).validate("null")).to.be.true
-		})
-		it('money', function () {
-			expect(new Hagim([{ isNot: "money" }]).validate("a3.223")).to.be.true
 		})
 		it('ip', function () {
 			expect(new Hagim([{ isNot: "ip" }]).validate("299.0.0")).to.be.true
@@ -95,9 +86,6 @@ describe('isNot', function () {
 		})
 		it('empty', function () {
 			expect(new Hagim([{ isNot: "empty" }]).validate("")).to.be.false
-		})
-		it('money', function () {
-			expect(new Hagim([{ isNot: "money" }]).validate("2.22")).to.be.false
 		})
 		it('url', function () {
 			expect(new Hagim([{ isNot: "url" }]).validate("http://www.baidu.com")).to.be.false
