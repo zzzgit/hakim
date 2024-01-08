@@ -1,6 +1,6 @@
 {
   "name": "hagim",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "a validation lib",
   "type": "module",
   "main": "src/hagim.js",
