@@ -1,10 +1,10 @@
-# hagim
+# hakim
 
-[![Build Status](https://travis-ci.org/zzzgit/hagim.png)](https://travis-ci.org/zzzgit/hakim)
-[![Join the chat at https://gitter.im/hagim-lib/Lobby](https://badges.gitter.im/hagim-lib/Lobby.svg)](https://gitter.im/hagim-lib/Lobby)
+[![Build Status](https://travis-ci.org/zzzgit/hakim.png)](https://travis-ci.org/zzzgit/hakim)
+[![Join the chat at https://gitter.im/hakim-lib/Lobby](https://badges.gitter.im/hakim-lib/Lobby.svg)](https://gitter.im/hakim-lib/Lobby)
 
 a validation lib for browser environment only.
-<https://www.npmjs.com/package/hagim>
+<https://www.npmjs.com/package/hakim>
 
 ## why
 
@@ -19,25 +19,25 @@ Another different is that there are more logic disjunction cases in browser envi
 To install via npm, run:
 
 ```javascript
-npm install hagim
+npm install hakim
 ```
 
 ## load
 
-To load hagim in node.js:
+To load hakim in node.js:
 
 ```javascript
-const Hagim = require('hagim');
+const hakim = require('hakim');
 ```
 
 ## design
 
 ```javascript
-let hagim = new Hagim(rules)
-hagim.validate("value")
+let hakim = new hakim(rules)
+hakim.validate("value")
 ```
 
-It is the basic form of usage of `Hagim`.
+It is the basic form of usage of `hakim`.
 The rules should be an array, e.g:
 
 ```javascript
@@ -53,16 +53,16 @@ The elements of the array consists of a validator and an operand. e.g `is` is th
 Each rule will be performed one by one, follow the order of they are in the array. If one rule fails, by default the whole process will be failed.
 
 ```javascript
-let hagim = new Hagim([{is: "empty"}, {is: "number"}, {is: "email"}, true])
-hagim.validate("")  // true
-hagim.validate("123.4")  // true
-hagim.validate("fatus@sky.com")  // true
+let hakim = new hakim([{is: "empty"}, {is: "number"}, {is: "email"}, true])
+hakim.validate("")  // true
+hakim.validate("123.4")  // true
+hakim.validate("fatus@sky.com")  // true
 ```
 
 The element itself can be an array too, e.g:
 
 ```javascript
-let rules = new Hagim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
+let rules = new hakim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
 ```
 
 ## usage
@@ -70,8 +70,8 @@ let rules = new Hagim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
 Rules are organized in an array, and every rule contains a validator and an operand. Operands can be an `element` or an `entity` or any kinds of data.
 
 ```javascript
-const Hagim = require('hagim');
-new Hagim([{is: "number"}, {is: "integer"}]).validate(2) // true
+const hakim = require('hakim');
+new hakim([{is: "number"}, {is: "integer"}]).validate(2) // true
 ```
 
 ## validators
@@ -173,8 +173,8 @@ whether the first member of the string does `not` belong to a certain kind of ch
 Each entity represents a certain kind of strings, like a `number` or an `email`. `is` and `isNot` can be used to judge whether the string represents a certain entity.
 
 ```javascript
-let hagim = new Hagim([{is: "number"}])
-hagim.validate("2")  // true
+let hakim = new hakim([{is: "number"}])
+hakim.validate("2")  // true
 ```
 
 If there is no such a entity match you need, you can extend this lib by yourself, check plugin section for details.
@@ -236,8 +236,8 @@ whether the character belongs to 0-9
 By default the rules in a array will be treated in an `and`-like manner, but it depends on you whether to change it. You can set it by appending an additional truthy value into the rules array. e.g:
 
 ```javascript
-new Hagim([{is: "number"}, {is: "empty"}, true]).validate("2.3") //true
-new Hagim([{is: "number"}, {is: "empty"}, true]).validate("") //true
+new hakim([{is: "number"}, {is: "empty"}, true]).validate("2.3") //true
+new hakim([{is: "number"}, {is: "empty"}, true]).validate("") //true
 ```
 
 You can specify a disjunction manner in every array, includes nested arrays, or leave it in a conjunction manner by default.
@@ -245,10 +245,10 @@ You can specify a disjunction manner in every array, includes nested arrays, or 
 ## plugin
 
 Third-party plugins are available by means of the extension API. Currently only `entities` and `elements` can be extended.
-For instance, if you want to define a plugin which extends Hagim to have a capability to judge whether the operand is a binary number, it should be like this:
+For instance, if you want to define a plugin which extends hakim to have a capability to judge whether the operand is a binary number, it should be like this:
 
 ```javascript
-Hagim.extend("entities", {
+hakim.extend("entities", {
   binary: funciton(value){
     return /[01]+/.test(value)
   }
