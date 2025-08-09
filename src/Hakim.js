@@ -1,104 +1,99 @@
-const abc = new Hakim([{ is: 'number' }, { is: 'decimal' }])
-console.log(abc.validate(123.45))
+import Instruction from './Instruction'
+import Criteria from './Criteria'
 
 class Hakim{
+
+	static is = 'is'
+
+	static isNot = 'isNot'
+
+	static are = 'are'
+
+	static match = 'match'
+
+	static exists = 'exists'
+
+	static beginWithSub = 'beginWithSub'
+
+	static notBeginWithSub = 'notBeginWithSub'
+
+	static startWithSet = 'startWithSet'
+
+	static notStartWithSet = 'notStartWithSet'
+
+	static hasString = 'hasString'
+
+	static gt = 'gt'
+
+	static lt = 'lt'
+
+	static goe = 'goe'
+
+	static loe = 'loe'
+
+	static dplacesGt = 'dplacesGt'
+
+	static dplacesLt = 'dplacesLt'
+
+	static decimal = 'decimal'
+
+	static dlengthOf = 'dlengthOf'
+
+	static required = 'required'
+
+	static lengthOf = 'lengthOf'
+
+	static lengthGt = 'lengthGt'
+
+	static lengthLt = 'lengthLt'
+
+	static equal = 'equal'
+
+	_isDecimal
 
 	_isNumber
 
 	_isString
 
-	_isDecimal
+	_criteria
 
-	constructor(criterion){
-		this.criterion = criterion
+	constructor(rawRules){
+		this._criteria = new Criteria(rawRules)
 		this._resetState()
 	}
 
 	_resetState(){
-		this.isNumber = false
-		this.isString = false
-		this.isDecimal = false
+		this._isNumber = false
+		this._isString = false
+		this._isDecimal = false
 	}
 
 	validate(value){
 		this._resetState()
-		const result = Hakim.validate(this, this.criterion, value)
-		return result
-	}
-
-	_validateItem = function(rule, value){
-		for (const key in rule){ // the only key 
-			if (!validators[key]){
-				throw new Error(`no such directive:${key}`)
-			}
-			if (!validators[key](rule[key], value)){
-				return false
-			}
-		}
-		return true
+		return this._criteria.validate(value)
 	}
 
 }
 
-Hagim.validateItem = function(that, obj, value){
-	for (const key in obj){
-		if (!validators[key]){
-			throw new Error(`no such directive:${key}`)
-		}
-		if (!validators[key].call(that, obj[key], value)){	// 一个不过，就都不过
-			return false
-		}
-	}
-	return true
-}
-Hagim.validate = function(that, criterion, value){
-	if (!criterion){
-		throw new Error('argument needed')
-	}
-	if (!Array.isArray(criterion)){
-		return this.validateItem(that, criterion, value)
-	}
-	let rules = criterion
-	let isOr = false
-	if (rules.length > 1 && rules[rules.length - 1] === true){
-		isOr = true
-	}
-	rules = rules.filter((item)=> {	// empty object will be filtered
-		for (const key in item){
-			// eslint-disable-next-line no-prototype-builtins
-			if (item.hasOwnProperty(key)){
-				return true
-			}
-		}
-	})
-	if (isOr){
-		return rules.some((item)=> {
-			return this.validate(that, item, value)
-		})
-	}
-	return rules.every((item)=> {
-		return this.validate(that, item, value)
-	})
-}
-Hagim.extend = function(part, name, asset){
-	if (typeof name == 'string'){
-		if (part == 'validators'){	// @del:0.3.0
-			part = 'entities'
-		}
-		if (part == 'characterSets'){	// @del:0.3.0
-			part = 'elements'
-		}
-		if (part == 'entities'){
-			return entities[name] = asset
-		}
-		if (part == 'elements'){
-			return elements[name] = asset
-		}
-	}
-	const assets = name
-	for (const key in assets){
-		entities[key] = assets[key]	// a bug here
-	}
-}
+Object.assign(Hakim, Instruction)
+
+// Hakim.extend = function(part, name, asset){
+// 	if (typeof name == 'string'){
+// 		if (part == 'entities'){
+// 			return entities[name] = asset
+// 		}
+// 		if (part == 'elements'){
+// 			return elements[name] = asset
+// 		}
+// 	}
+// 	const assets = name
+// 	for (const key in assets){
+// 		// a bug here
+// 		entities[key] = assets[key]
+// 	}
+// }
 
 export default Hakim
+
+const abc = new Hakim([{ [Hakim.is]: 'number' }, { [Hakim.is]: 'decimal' }])
+console.log(abc.validate(123.45))
