@@ -14,8 +14,8 @@ class Rule{
 		this._validator = Rule.getValidator(name)
 	}
 
-	validate(value){
-		return this._validator(this._operand, value)
+	validate(value, state){
+		return this._validator(this._operand, value, state)
 	}
 
 }

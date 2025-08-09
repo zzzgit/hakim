@@ -2,7 +2,7 @@ import Resource from './resource.js'
 import Characterset from './Characterset.js'
 
 const Instruction = {
-	is: function(operand, value){
+	is: function(operand, value, _state){
 		if (!operand){
 			throw new Error('argument needed')
 		}
@@ -10,12 +10,12 @@ const Instruction = {
 		if (!validator){
 			throw new Error('no such a validator')
 		}
-		return validator(value)
+		return validator(value, _state)
 	},
-	isNot: function(operand, value){
-		return !Instruction.is(operand, value)
+	isNot: function(operand, value, _state){
+		return !Instruction.is(operand, value, _state)
 	},
-	are: function(operand, value){
+	are: function(operand, value, _state){
 		if (!operand){
 			throw new Error('argument needed')
 		}
@@ -34,13 +34,13 @@ const Instruction = {
 		}
 		return true
 	},
-	match: function(operand, value){
+	match: function(operand, value, _state){
 		if (!(operand instanceof RegExp)){
 			throw new Error('the first parameter must be a regular express')
 		}
 		return operand.test(value + '')
 	},
-	exists: function(operand, value){
+	exists: function(operand, value, _state){
 		if (!operand){
 			throw new Error('argument needed')
 		}
@@ -61,7 +61,7 @@ const Instruction = {
 		const newvalue = '' + value
 		return newvalue.indexOf(operand) !== 0
 	},
-	startWithSet: function(operand, value){
+	startWithSet: function(operand, value, _state){
 		if (!operand){
 			throw new Error('argument needed')
 		}
@@ -74,9 +74,9 @@ const Instruction = {
 		// 		return false
 		// 	}
 		// }
-		return validator(value[0])
+		return validator(value[0], _state)
 	},
-	notStartWithSet: function(operand, value){
+	notStartWithSet: function(operand, value, _state){
 		if (!operand){
 			throw new Error('argument needed')
 		}
@@ -85,36 +85,36 @@ const Instruction = {
 			throw new Error('no such a validator')
 		}
 		const newvalue = '' + value
-		return validator(newvalue[0])
+		return validator(newvalue[0], _state)
 	},
-	hasString: function(operand, value){
+	hasString: function(operand, value, _state){
 		if (!operand){
 			throw new Error('argument needed')
 		}
 		const newvalue = value + ''
 		return newvalue.includes(operand)
 	},
-	gt: function(operand, value){
+	gt: function(operand, value, _state){
 		// Hagim.ensureNumber(this, value)
 		const newvalue = +value
 		return operand < newvalue
 	},
-	lt: function(operand, value){
+	lt: function(operand, value, _state){
 		// Hagim.ensureNumber(this, value)
 		const newvalue = +value
 		return operand > newvalue
 	},
-	goe: function(operand, value){
+	goe: function(operand, value, _state){
 		// Hagim.ensureNumber(this, value)
 		const newvalue = +value
 		return newvalue >= operand
 	},
-	loe: function(operand, value){
+	loe: function(operand, value, _state){
 		// Hagim.ensureNumber(this, value)
 		const newvalue = +value
 		return newvalue <= operand
 	},
-	dplacesGt: function(operand, value){
+	dplacesGt: function(operand, value, _state){
 		// Hagim.ensureNumber(this, value)
 		// Hagim.ensureDecimal(this, value)
 		const newvalue = '' + value
@@ -124,7 +124,7 @@ const Instruction = {
 		}
 		return arr[1].length > operand
 	},
-	dplacesLt: function(operand, value){
+	dplacesLt: function(operand, value, _state){
 		// Hagim.ensureNumber(this, value)
 		// Hagim.ensureDecimal(this, value)
 		const newvalue = '' + value
@@ -134,7 +134,7 @@ const Instruction = {
 		}
 		return arr[1].length < operand
 	},
-	decimal: function(operand, value){
+	decimal: function(operand, value, _state){
 		// Hagim.ensureNumber(this, value)
 		const newvalue = '' + value
 		const arr = newvalue.split('.')
@@ -146,7 +146,7 @@ const Instruction = {
 		// this.isDecimal = false
 		return false
 	},
-	dlengthOf: function(operand, value){
+	dlengthOf: function(operand, value, _state){
 		// Hagim.ensureNumber(this, value)
 		// Hagim.ensureDecimal(this, value)
 		const newvalue = '' + value
@@ -154,25 +154,25 @@ const Instruction = {
 		const length = arr.length === 1 ? 0 : arr[1].length
 		return length === +operand
 	},
-	required: function(operand, value){
+	required: function(operand, value, _state){
 		if (value == null || value == ''){
 			return false
 		}
 		return true
 	},
-	lengthOf: function(operand, value){
+	lengthOf: function(operand, value, _state){
 		const newvalue = '' + value
 		return newvalue.length === +operand
 	},
-	lengthGt: function(operand, value){
+	lengthGt: function(operand, value, _state){
 		const newvalue = '' + value
 		return newvalue.length > +operand
 	},
-	lengthLt: function(operand, value){
+	lengthLt: function(operand, value, _state){
 		const newvalue = '' + value
 		return newvalue.length < +operand
 	},
-	equal: function(operand, value){
+	equal: function(operand, value, _state){
 		return value == operand
 	},
 

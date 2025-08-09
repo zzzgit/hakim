@@ -29,11 +29,11 @@ class Criteria{
 		})
 	}
 
-	validate(value){
+	validate(value, state){
 		if (this._type === CriteriaType.ALL){
-			return this._ruleAndCriterias.every(rule=> rule.validate(value))
+			return this._ruleAndCriterias.every(rule=> rule.validate(value, state))
 		}
-		return this._ruleAndCriterias.some(rule=> rule.validate(value))
+		return this._ruleAndCriterias.some(rule=> rule.validate(value, state))
 	}
 
 }

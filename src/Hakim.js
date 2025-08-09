@@ -49,28 +49,24 @@ class Hakim{
 
 	static equal = 'equal'
 
-	_isDecimal
-
-	_isNumber
-
-	_isString
-
 	_criteria
 
 	constructor(rawRules){
 		this._criteria = new Criteria(rawRules)
-		this._resetState()
 	}
 
-	_resetState(){
-		this._isNumber = false
-		this._isString = false
-		this._isDecimal = false
+	_generateState(){
+		return {
+			isNumber: false,
+			isString: false,
+			isDecimal: false,
+		}
 	}
 
 	validate(value){
-		this._resetState()
-		return this._criteria.validate(value)
+		// 每次validate生成一个新的state
+		const state = this._generateState()
+		return this._criteria.validate(value, state)
 	}
 
 }
@@ -94,6 +90,3 @@ Object.assign(Hakim, Instruction)
 // }
 
 export default Hakim
-
-const abc = new Hakim([{ [Hakim.is]: 'number' }, { [Hakim.is]: 'decimal' }])
-console.log(abc.validate(123.45))
