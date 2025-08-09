@@ -1,26 +1,13 @@
-const elements = {
-	latin: function(char){	// currently latin is the same to enLetter
-		char = char + ''
-		if ((/[a-zA-Z]/).test(char)){
-			return true
-		}
-		return false
-	},
-	enLetter: function(char){
-		char = char + ''
-		return char >= 'a' && char <= 'z' || char >= 'A' && char <= 'Z'
-	},
-	digit: function(char){
-		char = char + ''
-		if ((/[0-9]/).test(char)){
-			return true
-		}
-		return false
-	},
-
-}
+const abc = new Hakim([{ is: 'number' }, { is: 'decimal' }])
+console.log(abc.validate(123.45))
 
 class Hakim{
+
+	_isNumber
+
+	_isString
+
+	_isDecimal
 
 	constructor(criterion){
 		this.criterion = criterion
@@ -53,20 +40,6 @@ class Hakim{
 
 }
 
-Hagim.ensureNumber = function(hagim, value){
-	if (!hagim.isNumber){
-		if (!validators.is.call(hagim, 'number', value)){
-			throw new Error('can\'t campare number with ' + value)
-		}
-	}
-}
-Hagim.ensureDecimal = function(hagim, value){
-	if (!hagim.isDecimal){
-		if (!validators.is.call(hagim, 'decimal', value)){
-			throw new Error('can\'t campare decimal digits with ' + value)
-		}
-	}
-}
 Hagim.validateItem = function(that, obj, value){
 	for (const key in obj){
 		if (!validators[key]){
@@ -128,4 +101,4 @@ Hagim.extend = function(part, name, asset){
 	}
 }
 
-export default Hagim
+export default Hakim

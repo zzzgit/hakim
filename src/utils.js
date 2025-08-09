@@ -1,10 +1,12 @@
-const combine = (...rules)=> {
-	return (...args)=> {
-		return fns.reduce((result, fn)=> {
-			if (typeof fn === 'function'){
-				return fn(result)
-			}
-			return result
-		}, args)
+export const ensureNumber = function(value){
+	if (!validators.is.call(hagim, 'number', value)){
+		throw new Error('can\'t campare number with ' + value)
+	}
+}
+export const ensureDecimal = function(value){
+	if (!hagim.isDecimal){
+		if (!validators.is.call(hagim, 'decimal', value)){
+			throw new Error('can\'t campare decimal digits with ' + value)
+		}
 	}
 }

@@ -1,16 +1,19 @@
-const validators = {
+import Resource from './resource.js'
+import Characterset from './Characterset.js'
+
+const Instruction = {
 	is: function(operand, value){
 		if (!operand){
 			throw new Error('argument needed')
 		}
-		const validator = entities[operand]
+		const validator = something[operand]
 		if (!validator){
 			throw new Error('no such a validator')
 		}
-		return validator.call(this, value)
+		return validator(value)
 	},
 	isNot: function(operand, value){
-		return !validators.is(operand, value)
+		return !Instruction.is(operand, value)
 	},
 	are: function(operand, value){
 		if (!operand){
@@ -19,13 +22,13 @@ const validators = {
 		if (typeof value != 'string'){
 			return false
 		}
-		const validator = elements[operand]
+		const validator = Characterset[operand]
 		if (!validator){
 			throw new Error('no such a validator')
 		}
 		for (let i = 0, len = value.length; i < len; i++){
 			const item = value[i]
-			if (!validator.call(this, item, operand)){
+			if (!validator(item)){
 				return false
 			}
 		}
@@ -37,139 +40,117 @@ const validators = {
 		}
 		return operand.test(value + '')
 	},
-	includes: function(operand, value){	// @del:0.5.0 same as exist, have is also a good name
+	exists: function(operand, value){
 		if (!operand){
 			throw new Error('argument needed')
 		}
-		const validator = elements[operand]
+		const validator = Characterset[operand]
 		if (!validator){
 			throw new Error('no such a validator')
 		}
 		if (value == null || value == ''){
 			return false
 		}
-		for (let i = 0, len = value.length; i < len; i++){
-			const item = value[i]
-			if (validator.call(null, item, operand)){
-				return true
-			}
-		}
-		return false
-	},
-	exist: function(operand, value){
-		return validators.includes(operand, value)
+		return value.some(item=> validator(item))
 	},
 	beginWithSub: function(operand, value){
-		value = '' + value
-		return value.indexOf(operand) === 0
+		const newvalue = '' + value
+		return newvalue.indexOf(operand) === 0
 	},
 	notBeginWithSub: function(operand, value){
-		value = '' + value
-		return value.indexOf(operand) !== 0
+		const newvalue = '' + value
+		return newvalue.indexOf(operand) !== 0
 	},
 	startWithSet: function(operand, value){
 		if (!operand){
 			throw new Error('argument needed')
 		}
-		const validator = elements[operand]
+		const validator = Characterset[operand]
 		if (!validator){
 			throw new Error('no such a validator')
 		}
-		if (!this.isString){
-			if (!validators.is.call(this, 'string', value)){
-				return false
-			}
-		}
-		if (validator.call(this, value[0])){
-			return true
-		}
-		return false
+		// if (!this.isString){
+		// 	if (!validators.is.call(this, 'string', value)){
+		// 		return false
+		// 	}
+		// }
+		return validator(value[0])
 	},
 	notStartWithSet: function(operand, value){
 		if (!operand){
 			throw new Error('argument needed')
 		}
-		const validator = elements[operand]
+		const validator = Characterset[operand]
 		if (!validator){
 			throw new Error('no such a validator')
 		}
-		value = '' + value
-		if (validator.call(this, value[0])){
-			return false
-		}
-		return true
-	},
-	haveString: function(operand, value){
-		if (!operand){
-			throw new Error('argument needed')
-		}
-		value = value + ''
-		return value.includes(operand)
+		const newvalue = '' + value
+		return validator(newvalue[0])
 	},
 	hasString: function(operand, value){
 		if (!operand){
 			throw new Error('argument needed')
 		}
-		value = value + ''
-		return value.includes(operand)
+		const newvalue = value + ''
+		return newvalue.includes(operand)
 	},
 	gt: function(operand, value){
-		Hagim.ensureNumber(this, value)
-		value = +value
-		return operand < value
+		// Hagim.ensureNumber(this, value)
+		const newvalue = +value
+		return operand < newvalue
 	},
 	lt: function(operand, value){
-		Hagim.ensureNumber(this, value)
-		value = +value
-		return operand > value
+		// Hagim.ensureNumber(this, value)
+		const newvalue = +value
+		return operand > newvalue
 	},
 	goe: function(operand, value){
-		Hagim.ensureNumber(this, value)
-		value = +value
-		return value >= operand
+		// Hagim.ensureNumber(this, value)
+		const newvalue = +value
+		return newvalue >= operand
 	},
 	loe: function(operand, value){
-		Hagim.ensureNumber(this, value)
-		value = +value
-		return value <= operand
+		// Hagim.ensureNumber(this, value)
+		const newvalue = +value
+		return newvalue <= operand
 	},
 	dplacesGt: function(operand, value){
-		Hagim.ensureNumber(this, value)
+		// Hagim.ensureNumber(this, value)
 		// Hagim.ensureDecimal(this, value)
-		value = '' + value
-		const arr = value.split('.')
+		const newvalue = '' + value
+		const arr = newvalue.split('.')
 		if (arr.length === 1){
 			return false
 		}
 		return arr[1].length > operand
 	},
 	dplacesLt: function(operand, value){
-		Hagim.ensureNumber(this, value)
+		// Hagim.ensureNumber(this, value)
 		// Hagim.ensureDecimal(this, value)
-		value = '' + value
-		const arr = value.split('.')
+		const newvalue = '' + value
+		const arr = newvalue.split('.')
 		if (arr.length === 1){
 			return 0 < operand
 		}
 		return arr[1].length < operand
 	},
-	decimal: function(operand, value){	// @del:0.3.0 有两个decimal函数，关系不清楚，这个不能删除，会报错
-		Hagim.ensureNumber(this, value)
-		value = '' + value
-		const arr = value.split('.')
+	decimal: function(operand, value){
+		// Hagim.ensureNumber(this, value)
+		const newvalue = '' + value
+		const arr = newvalue.split('.')
 		const length = arr.length === 1 ? 0 : arr[1].length
 		if (length === +operand){
-			this.isDecimal = true
+			// this.isDecimal = true
 			return true
 		}
-		this.isDecimal = false
+		// this.isDecimal = false
 		return false
 	},
 	dlengthOf: function(operand, value){
-		Hagim.ensureNumber(this, value)
+		// Hagim.ensureNumber(this, value)
 		// Hagim.ensureDecimal(this, value)
-		value = '' + value
-		const arr = value.split('.')
+		const newvalue = '' + value
+		const arr = newvalue.split('.')
 		const length = arr.length === 1 ? 0 : arr[1].length
 		return length === +operand
 	},
@@ -180,16 +161,16 @@ const validators = {
 		return true
 	},
 	lengthOf: function(operand, value){
-		value = '' + value
-		return value.length === +operand
+		const newvalue = '' + value
+		return newvalue.length === +operand
 	},
 	lengthGt: function(operand, value){
-		value = '' + value
-		return value.length > +operand
+		const newvalue = '' + value
+		return newvalue.length > +operand
 	},
 	lengthLt: function(operand, value){
-		value = '' + value
-		return value.length < +operand
+		const newvalue = '' + value
+		return newvalue.length < +operand
 	},
 	equal: function(operand, value){
 		return value == operand
@@ -215,8 +196,8 @@ const something = {
 		return false
 	},
 	email: function(value){
-		value = '' + value
-		return res.email.test(value)
+		const newvalue = '' + value
+		return Resource.email.test(newvalue)
 	},
 	empty: function(value){
 		if (value == null || value === ''){
@@ -239,35 +220,40 @@ const something = {
 	},
 	ip: function(value){
 		value = '' + value
-		return res.ip.test(value)
+		return Resource.ip.test(value)
 	},
 	url: function(value){
 		value = '' + value
-		return res.url.test(value)
+		return Resource.url.test(value)
 	},
-	integer: function(value){	// 3.00算小數
-		Hagim.ensureNumber(this, value)
+	// 3.00算小數
+	integer: function(value){
+		// Hagim.ensureNumber(this, value)
 		// if (Number.isInteger(value)) {
 		// 	return true
 		// }
-		value = '' + value
-		return res.integer.test(value)
+		const newvalue = '' + value
+		return Resource.integer.test(newvalue)
 	},
 	decimal: function(value){
-		Hagim.ensureNumber(this, value)
-		return !res.integer.test(value)
+		// Hagim.ensureNumber(this, value)
+		return !Resource.integer.test(value)
 	},
 	positive: function(value){
-		Hagim.ensureNumber(this, value)
-		value = +value
-		return value > 0
+		// Hagim.ensureNumber(this, value)
+		const newvalue = +value
+		return newvalue > 0
 	},
 	negative: function(value){
-		Hagim.ensureNumber(this, value)
-		value = +value
-		return value < 0
+		// Hagim.ensureNumber(this, value)
+		const newvalue = +value
+		return newvalue < 0
 	},
 	string: function(value){
 		return typeof value == 'string'
 	},
+}
+
+export {
+	Instruction,
 }

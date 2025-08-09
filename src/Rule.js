@@ -1,8 +1,11 @@
 class Rule{
 
-	constructor(name, validate){
-		this.name = name
-		this.validate = validate
+	constructor(validate){
+		this._validate = validate
+	}
+
+	validate(value){
+		return this._validate(value)
 	}
 
 }
