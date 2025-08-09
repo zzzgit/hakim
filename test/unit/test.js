@@ -512,7 +512,7 @@ describe('Hakim', function(){
 				expect(new Hakim([{ dplacesGt: 3 }]).validate('2.33333')).to.be.true
 			})
 
-			it('is decimal', function(){
+			it('is decimal 2', function(){
 				expect(new Hakim([{ dplacesGt: 3 }]).validate('3333')).to.be.false
 			})
 		})
