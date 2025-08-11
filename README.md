@@ -1,256 +1,288 @@
-# hagim
+# hakim
 
-[![Build Status](https://travis-ci.org/zzzgit/hagim.png)](https://travis-ci.org/zzzgit/hakim)
-[![Join the chat at https://gitter.im/hagim-lib/Lobby](https://badges.gitter.im/hagim-lib/Lobby.svg)](https://gitter.im/hagim-lib/Lobby)
+[![NPM Version](https://img.shields.io/npm/v/hakim)](https://www.npmjs.com/package/hakim)
 
-a validation lib for browser environment only.
-<https://www.npmjs.com/package/hagim>
+A lightweight, flexible validation library for JavaScript that works in both browser and Node.js environments.
+<https://www.npmjs.com/package/hakim>
 
-## why
+## Why Hakim?
 
-It has been a long time since I have needed to find an easy to use javascript validation lib for browser environments. Every lib I found on github is not suitable for me. So finally I decided to make a new wheel.
+Hakim provides a powerful yet simple validation system that handles both string and numeric values with the same API. This is particularly useful for browser environments where form inputs are often strings even when representing numbers.
 
-The most significant different between `Node.js` environment and browser environment is that in the latter, numbers may be represented by a string variable(e.g: if using a Two-Way Data Binding framework). So, validating a number in the browser may be more difficult than in Node.js.
+Key features:
+- Unified validation for strings and numbers
+- Composable validation rules for complex validations
+- Flexible logic operators (AND/OR) for combining rules
+- Extensible plugin system for custom validators
+- Modern ES module format with browser and Node.js support
 
-Another different is that there are more logic disjunction cases in browser environment.
+## Installation
 
-## installation
+To install via npm:
 
-To install via npm, run:
-
-```javascript
-npm install hagim
+```bash
+npm install hakim
 ```
 
-## load
+## Usage
 
-To load hagim in node.js:
-
-```javascript
-const Hagim = require('hagim');
-```
-
-## design
+Import Hakim in your JavaScript project:
 
 ```javascript
-let hagim = new Hagim(rules)
-hagim.validate("value")
+// ESM import
+import Hakim, { combineAny } from 'hakim';
+
+// Or in browser with script tag
+<script src="path/to/hakim.js"></script>
 ```
 
-It is the basic form of usage of `Hagim`.
-The rules should be an array, e.g:
+## Basic Concept
+
+The core concept of Hakim is simple:
+
+```javascript
+const validator = new Hakim(rules);
+validator.validate(value); // returns true or false
+```
+
+Where `rules` is an array of validation rules, and each rule consists of a validator and an operand:
 
 ```javascript
 [{is: "number"}, {is: "integer"}]
 ```
 
-1. `Number` and `String` can be judged by the same API
-2. multiple rules can be gathered togather to form a complex judgement
-3. rules may be treated in a `and` behavior by default, but you can change this by adding a additional `true` literal in the rules array
-4. rules can be nested to form a complex judgement
+In the above example, `is` is the validator and `"number"` is the operand. Each rule is executed in order, and all rules must pass for the validation to succeed (AND logic by default).
 
-The elements of the array consists of a validator and an operand. e.g `is` is the validator and `"number"` is the operand.
-Each rule will be performed one by one, follow the order of they are in the array. If one rule fails, by default the whole process will be failed.
+### Key Features
 
+1. Unified validation for both numbers and strings
+2. Multiple rules can be combined to create complex validations
+3. Configurable logic operators (AND/OR) for rule processing
+4. Support for nested rule groups
+
+### Examples
+
+Basic validation:
 ```javascript
-let hagim = new Hagim([{is: "empty"}, {is: "number"}, {is: "email"}, true])
-hagim.validate("")  // true
-hagim.validate("123.4")  // true
-hagim.validate("fatus@sky.com")  // true
+import Hakim from 'hakim';
+
+// Validate an integer
+new Hakim([{is: "number"}, {is: "integer"}]).validate(2); // true
+new Hakim([{is: "number"}, {is: "integer"}]).validate("2"); // true
+new Hakim([{is: "number"}, {is: "integer"}]).validate(2.5); // false
+
+// Validate an email
+new Hakim([{is: "email"}]).validate("user@example.com"); // true
 ```
 
-The element itself can be an array too, e.g:
-
+Using OR logic with `combineAny`:
 ```javascript
-let rules = new Hagim([{is: "empty"}, [{is: "number"}, {is: "integer"}]])
+import Hakim, { combineAny } from 'hakim';
+
+// Value must be empty OR a number OR an email
+new Hakim(combineAny([
+  {is: "empty"}, 
+  {is: "number"}, 
+  {is: "email"}
+])).validate("user@example.com"); // true
 ```
 
-## usage
-
-Rules are organized in an array, and every rule contains a validator and an operand. Operands can be an `element` or an `entity` or any kinds of data.
-
+Nested rules:
 ```javascript
-const Hagim = require('hagim');
-new Hagim([{is: "number"}, {is: "integer"}]).validate(2) // true
+// Must be empty OR (a number AND an integer)
+new Hakim([
+  {is: "empty"}, 
+  [{is: "number"}, {is: "integer"}]
+]).validate(""); // true
 ```
 
-## validators
+## Validators
 
-### is
+Hakim provides a rich set of validators to create expressive validation rules:
 
-whether the string represent a special string or number(more details on entities section)
+### Value Type Validators
 
-### isNot
+| Validator | Description |
+|-----------|-------------|
+| `is` | Checks if a value matches a predefined entity type (e.g., number, email) |
+| `isNot` | Negates the `is` validator |
+| `equal` | Checks if a value equals the operand (uses `==`) |
+| `match` | Tests if a string matches a regular expression pattern |
+| `required` | Checks if a value is not empty |
 
-the opposite of `is`
+### Number Validators
 
-### are
+| Validator | Description |
+|-----------|-------------|
+| `gt` | Greater than |
+| `lt` | Less than |
+| `goe` | Greater than or equal |
+| `loe` | Less than or equal |
+| `dplacesGt` | Decimal places greater than |
+| `dplacesLt` | Decimal places less than |
+| `dlengthOf` | Decimal places equals |
 
-whether all the members of a string belong to a certain character set(more details on elements section)
+### String Validators
 
-### match
+| Validator | Description |
+|-----------|-------------|
+| `lengthOf` | String length equals |
+| `lengthGt` | String length greater than |
+| `lengthLt` | String length less than |
+| `beginWithSub` | String begins with a substring |
+| `notBeginWithSub` | String does not begin with a substring |
+| `hasString` | String contains a substring |
 
-whether the string match a certain regular express. Under the hood the function `re.test()` is used
+### Character Set Validators
 
-### exist
+| Validator | Description |
+|-----------|-------------|
+| `are` | All characters in string belong to a character set |
+| `exists` | String contains characters from a character set |
+| `startWithSet` | String starts with a character from a set |
+| `notStartWithSet` | String does not start with a character from a set |
 
-whether the string includes a certain kind of characters(more details on elements section)
+## Entity Types
 
-### haveString
+Entity types are used with the `is` and `isNot` validators to check if a value represents a specific type of data:
 
-the same as `exist`
+| Entity | Description |
+|--------|-------------|
+| `number` | Validates if value is a number (or string representing a number) |
+| `integer` | Validates if value is an integer |
+| `decimal` | Validates if value is a decimal number |
+| `positive` | Validates if value is a positive number |
+| `negative` | Validates if value is a negative number |
+| `email` | Validates if value is a valid email address |
+| `empty` | Validates if value is `""`, `null`, `undefined` or `[]` |
+| `ip` | Validates if value is a valid IP address |
+| `url` | Validates if value is a valid URL |
+| `string` | Validates if value is a string |
 
-### contains
-
-whether the string contains a certain substring
-
-### required
-
-whether the string is not empty
-
-### gt
-
-whether it is greater than the operand
-
-### lt
-
-whether it is lower than the operand
-
-### goe
-
-whether it is greater than or equal to the operand
-
-### loe
-
-whether it is lower than or equal to the operand
-
-### equal
-
-whether it equals the operand, under the hood `==` is used for comparing
-
-### dplacesGt
-
-whether the digits of decimal part is greater than the operand
-
-### dplacesLt
-
-whether the digits of decimal part is Lower than the operand
-
-### dlengthOf
-
-whether the digits of decimal part equals the operand
-
-### lengthGt
-
-whether the length of the string is greater than the operand
-
-### lengthLt
-
-whether the length of the string is lower than the operand
-
-### lengthOf
-
-whether the length of the string equsls the operand
-
-### beginWithSub
-
-whether the string begin with a certain word
-
-### notBeginWithSub
-
-whether the string don't begin with a certain word
-
-### startWithSet
-
-whether the first member of the string belongs to a certain kind of characters(more details on elements section)
-
-### notStartWithSet
-
-whether the first member of the string does `not` belong to a certain kind of characters(more details on elements section)
-
-## entities
-
-Each entity represents a certain kind of strings, like a `number` or an `email`. `is` and `isNot` can be used to judge whether the string represents a certain entity.
-
+Example:
 ```javascript
-let hagim = new Hagim([{is: "number"}])
-hagim.validate("2")  // true
+// Check if value is a number
+new Hakim([{is: "number"}]).validate("123"); // true
+
+// Check if value is an email
+new Hakim([{is: "email"}]).validate("test@example.com"); // true
 ```
 
-If there is no such a entity match you need, you can extend this lib by yourself, check plugin section for details.
+## Character Sets
 
-### number
+Character sets are used with the `are`, `exists`, `startWithSet`, and `notStartWithSet` validators:
 
-whether the string represent a number
+| Character Set | Description |
+|---------------|-------------|
+| `latin` | Latin letters (a-z, A-Z) |
+| `enLetter` | English letters (same as latin) |
+| `digit` | Numeric digits (0-9) |
 
-### integer
-
-whether the string represent an integer
-
-### decimal
-
-whether the string represent a decimal number
-
-### positive
-
-whether the string represent a positive number
-
-### negative
-
-whether the string represent a negative number
-
-### email
-
-whether the string represents a email
-
-### empty
-
-whether the string is `""`, `null`, `undefined` or `[]`
-
-### ip
-
-whether the string represent an ip address
-
-### url
-
-whether the string represent a url
-
-## elements
-
-Each element represents a certain character set, like Latin letters or digits. `are` can be used to judge whether all of the members of a string belong to a certain set.
-
-### latin
-
-whether the character belongs to latin letter set
-
-### enLetter
-
-currently the same to latin
-
-### digit
-
-whether the character belongs to 0-9
-
-## logic conjunction and disjunction
-
-By default the rules in a array will be treated in an `and`-like manner, but it depends on you whether to change it. You can set it by appending an additional truthy value into the rules array. e.g:
-
+Example:
 ```javascript
-new Hagim([{is: "number"}, {is: "empty"}, true]).validate("2.3") //true
-new Hagim([{is: "number"}, {is: "empty"}, true]).validate("") //true
+// Check if all characters are digits
+new Hakim([{are: "digit"}]).validate("12345"); // true
+new Hakim([{are: "digit"}]).validate("123a5"); // false
+
+// Check if string contains any digits
+new Hakim([{exists: "digit"}]).validate("abc123"); // true
 ```
 
-You can specify a disjunction manner in every array, includes nested arrays, or leave it in a conjunction manner by default.
+## Logic Operations
 
-## plugin
+By default, Hakim processes rules with AND logic (all rules must pass), but you can change this using the `combineAny` function for OR logic:
 
-Third-party plugins are available by means of the extension API. Currently only `entities` and `elements` can be extended.
-For instance, if you want to define a plugin which extends Hagim to have a capability to judge whether the operand is a binary number, it should be like this:
+### AND Logic (Default)
+All rules must pass for validation to succeed:
 
 ```javascript
-Hagim.extend("entities", {
-  binary: funciton(value){
-    return /[01]+/.test(value)
-  }
-})
+// Value must be a number AND an integer
+new Hakim([{is: "number"}, {is: "integer"}]).validate("123"); // true
+new Hakim([{is: "number"}, {is: "integer"}]).validate("123.4"); // false
 ```
+
+### OR Logic
+Using `combineAny` to enable OR logic (any rule passing means validation success):
+
+```javascript
+import Hakim, { combineAny } from 'hakim';
+
+// Value can be either empty OR a number
+new Hakim(combineAny([
+  {is: "empty"}, 
+  {is: "number"}
+])).validate(""); // true
+new Hakim(combineAny([
+  {is: "empty"}, 
+  {is: "number"}
+])).validate("123"); // true
+```
+
+### Nested Logic Groups
+You can create complex validations by nesting rule groups:
+
+```javascript
+// Must be either empty OR (a number AND positive)
+new Hakim([
+  {is: "empty"},
+  [{is: "number"}, {is: "positive"}]
+]).validate("123"); // true
+
+// Must be (a number AND an integer) OR (a string AND not empty)
+new Hakim(combineAny([
+  [{is: "number"}, {is: "integer"}],
+  [{is: "string"}, {required: true}]
+])).validate("hello"); // true
+```
+
+## Extensions
+
+You can extend Hakim with custom validators using the `extend` method:
+
+### Adding Custom Entity Types
+
+```javascript
+// Add a 'binary' entity type
+Hakim.extend('something', 'binary', function(value) {
+  return /^[01]+$/.test(value);
+});
+
+// Now you can use it in validation
+new Hakim([{is: "binary"}]).validate("1010"); // true
+new Hakim([{is: "binary"}]).validate("1234"); // false
+```
+
+### Adding Custom Character Sets
+
+```javascript
+// Add a 'hex' character set
+Hakim.extend('characterSets', 'hex', function(char) {
+  return /^[0-9a-fA-F]$/.test(char);
+});
+
+// Now you can use it in validation
+new Hakim([{are: "hex"}]).validate("a1f5"); // true
+```
+
+## Browser Compatibility
+
+Hakim is designed to work in all modern browsers. The library is provided as both ES modules and CommonJS formats:
+
+- `built/hakim.js` - ES module format
+- `built/hakim.cjs` - CommonJS format
+
+## Testing
+
+The library includes comprehensive test cases for both browser and Node.js environments:
+
+```bash
+# Run tests in Node.js
+npm run test:node
+
+# Run tests in browser
+npm run test:browser
+```
+
+## License
+
+This project is licensed under the [LGPL-3.0-or-later](LICENSE)

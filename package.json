@@ -1,10 +1,10 @@
 {
-  "name": "hagim",
-  "version": "1.0.5",
+  "name": "hakim",
+  "version": "2.0.0",
   "description": "a validation lib",
   "type": "module",
-  "main": "src/hagim.js",
-  "browser": "built/hagim.js",
+  "main": "built/hakim.js",
+  "browser": "built/hakim.js",
   "scripts": {
     "clear": "rimraf built coverage .nyc_output",
     "build": "npm run clear && cross-env NODE_ENV=production rollup -c",
@@ -12,7 +12,6 @@
     "test:node": "cross-env MODE=node nyc npm run mocha",
     "karma": "karma start",
     "test:browser": "cross-env MODE=browser npm run karma",
-    "push": "git add ./ && git commit && git pull && git push",
     "deploy": "npm run build && npm run push && npm publish"
   },
   "repository": {
@@ -25,7 +24,7 @@
   "keywords": [
     "validaton",
     "node",
-    "hagim",
+    "hakim",
     "javascript"
   ],
   "author": "revenger",
@@ -35,20 +34,24 @@
   },
   "homepage": "https://github.com/zzzgit/hakim#readme",
   "devDependencies": {
-    "chai": "^5.0.0",
-    "chalk": "^5.3.0",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
-    "karma": "^6.4.2",
+    "@stylistic/eslint-plugin": "^5.2.3",
+    "chai": "^5.2.1",
+    "cross-env": "^10.0.0",
+    "eslint": "^9.32.0",
+    "eslint-config-janus": "^9.0.17",
+    "eslint-plugin-array-func": "^5.0.2",
+    "eslint-plugin-mocha": "^11.1.0",
+    "eslint-plugin-no-floating-promise": "^2.0.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-unicorn": "^60.0.0",
+    "karma": "^6.4.4",
     "karma-chrome-launcher": "^3.2.0",
     "karma-coverage": "^2.2.1",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
-    "rimraf": "^5.0.5",
-    "rollup": "^4.9.2",
-    "rollup-plugin-replace": "^2.2.0"
-  },
-  "dependencies": {}
+    "mocha": "^11.7.1",
+    "nyc": "^17.1.0",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.46.2"
+  }
 }
