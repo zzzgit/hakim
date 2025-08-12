@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import Hakim, { combineAny } from '../../src/Hakim.js'
+import Hakim, { anyOf } from '../../src/Hakim.js'
 
 describe('Hakim', function(){
 	describe('is', function(){
@@ -371,25 +371,25 @@ describe('Hakim', function(){
 	describe('parallel', function(){
 		describe('should be true', function(){
 			it('foo', function(){
-				const rulesArr = combineAny([[{ is: 'empty' }], [{ is: 'number' }]])
+				const rulesArr = anyOf([[{ is: 'empty' }], [{ is: 'number' }]])
 				expect(new Hakim(rulesArr).validate(null)).to.be.true
 			})
 
 			it('bar', function(){
-				const numberOrNegative = combineAny([[{ is: 'number' }], [{ is: 'negative' }]])
-				const rulesArr = combineAny([[{ is: 'empty' }], numberOrNegative])
+				const numberOrNegative = anyOf([[{ is: 'number' }], [{ is: 'negative' }]])
+				const rulesArr = anyOf([[{ is: 'empty' }], numberOrNegative])
 				expect(new Hakim(rulesArr).validate('2')).to.be.true
 			})
 		})
 
 		describe('should be false', function(){
 			it('foo', function(){
-				const rulesArr = combineAny([[{ is: 'empty' }], [{ is: 'number' }]])
+				const rulesArr = anyOf([[{ is: 'empty' }], [{ is: 'number' }]])
 				expect(new Hakim(rulesArr).validate('null')).to.be.false
 			})
 
 			it('bar', function(){
-				const rulesArr = combineAny([[{ is: 'empty' }], [{ is: 'number' }, { is: 'negative' }]])
+				const rulesArr = anyOf([[{ is: 'empty' }], [{ is: 'number' }, { is: 'negative' }]])
 				expect(new Hakim(rulesArr).validate('2')).to.be.false
 			})
 		})

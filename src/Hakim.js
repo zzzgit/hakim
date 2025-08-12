@@ -1,7 +1,7 @@
 import Criteria from './Criteria.js'
 import { something } from './instructions.js'
 import characterSets from './charactersets.js'
-import { combineAny } from './utils.js'
+import { anyOf } from './utils.js'
 
 class Hakim{
 
@@ -91,4 +91,4 @@ class Hakim{
 
 export default Hakim
 
-export { combineAny }
+export { anyOf }

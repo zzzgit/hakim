@@ -30,7 +30,7 @@ Import Hakim in your JavaScript project:
 
 ```javascript
 // ESM import
-import Hakim, { combineAny } from 'hakim';
+import Hakim, { anyOf } from 'hakim';
 
 // Or in browser with script tag
 <script src="path/to/hakim.js"></script>
@@ -75,12 +75,12 @@ new Hakim([{is: "number"}, {is: "integer"}]).validate(2.5); // false
 new Hakim([{is: "email"}]).validate("user@example.com"); // true
 ```
 
-Using OR logic with `combineAny`:
+Using OR logic with `anyOf`:
 ```javascript
-import Hakim, { combineAny } from 'hakim';
+import Hakim, { anyOf } from 'hakim';
 
 // Value must be empty OR a number OR an email
-new Hakim(combineAny([
+new Hakim(anyOf([
   {is: "empty"}, 
   {is: "number"}, 
   {is: "email"}
@@ -190,7 +190,7 @@ new Hakim([{exists: "digit"}]).validate("abc123"); // true
 
 ## Logic Operations
 
-By default, Hakim processes rules with AND logic (all rules must pass), but you can change this using the `combineAny` function for OR logic:
+By default, Hakim processes rules with AND logic (all rules must pass), but you can change this using the `anyOf` function for OR logic:
 
 ### AND Logic (Default)
 All rules must pass for validation to succeed:
@@ -202,17 +202,17 @@ new Hakim([{is: "number"}, {is: "integer"}]).validate("123.4"); // false
 ```
 
 ### OR Logic
-Using `combineAny` to enable OR logic (any rule passing means validation success):
+Using `anyOf` to enable OR logic (any rule passing means validation success):
 
 ```javascript
-import Hakim, { combineAny } from 'hakim';
+import Hakim, { anyOf } from 'hakim';
 
 // Value can be either empty OR a number
-new Hakim(combineAny([
+new Hakim(anyOf([
   {is: "empty"}, 
   {is: "number"}
 ])).validate(""); // true
-new Hakim(combineAny([
+new Hakim(anyOf([
   {is: "empty"}, 
   {is: "number"}
 ])).validate("123"); // true
@@ -229,7 +229,7 @@ new Hakim([
 ]).validate("123"); // true
 
 // Must be (a number AND an integer) OR (a string AND not empty)
-new Hakim(combineAny([
+new Hakim(anyOf([
   [{is: "number"}, {is: "integer"}],
   [{is: "string"}, {required: true}]
 ])).validate("hello"); // true

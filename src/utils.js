@@ -44,7 +44,7 @@ const checkDecimal = (value)=> {
 	return !resource.integer.test(newvalue)
 }
 
-export const combineAny = (arr)=> {
+export const anyOf = (arr)=> {
 	if (!Array.isArray(arr)){
 		return arr
 	}
